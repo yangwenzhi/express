@@ -1,0 +1,15 @@
+<view class="container">
+
+    <view class="item" wx:for="{{userlist}}" wx:key="userId" wx:for-item="item">
+        <navigator hover-class="none" url="../userdetail/userdetail?id={{item.id}}">
+            <view class="order">{{item.id}}</view>
+            <view class="state">
+                <text wx:if="{{item.power==0}}" class="red">待审核</text>
+                <text wx:if="{{item.power==1}}" class="green">正常</text>
+                <text wx:if="{{item.power==2}}">黑户</text>
+            </view>
+            <view class="icon"><image class="icon-img" src="../../images/icon.png" background-size="cover"></image></view>
+        </navigator>
+    </view>
+    
+</view>

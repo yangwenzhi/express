@@ -1,0 +1,11 @@
+{
+	"path": {
+		"pc" : "/Users/yangwenzhi/work/51vv/vv-live-pc",
+		"m" : "/Users/yangwenzhi/work/51vv/webapp/m"
+	},
+	"oc" : {
+		"pc" : "subject",
+		"m" : "active"
+	},
+	"status": "test"
+}

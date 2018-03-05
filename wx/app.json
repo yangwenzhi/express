@@ -1,0 +1,47 @@
+{
+    "pages":[
+        "pages/login/login",
+        "pages/index/index",
+        "pages/list/list",
+        "pages/add/add",
+        "pages/mycenter/mycenter",
+        "pages/tongji/tongji",
+        "pages/order/order",
+        "pages/addexpress/addexpress",
+        "pages/user/user",
+        "pages/userdetail/userdetail",
+        "pages/outer/outer"
+    ],
+    "window":{
+        "backgroundTextStyle": "light",
+        "navigationBarBackgroundColor": "#3481eb",
+        "navigationBarTitleText": "站长助手",
+        "navigationBarTextStyle": "white",
+        "backgroundColor": "#f0eff4"
+    },
+    "tabBar": {
+        "color": "#858585",
+        "selectedColor": "#3481eb",
+        "backgroundColor": "#ffffff",
+        "borderStyle": "white",
+        "list": [{
+            "selectedIconPath": "images/nav/select_h.png",
+            "iconPath": "images/nav/select.png",
+            "pagePath": "pages/index/index",
+            "text": "查询"
+        }, {
+            "selectedIconPath": "images/nav/join_h.png",
+            "iconPath": "images/nav/join.png",
+            "pagePath": "pages/list/list",
+            "text": "入库"
+        }, {
+            "selectedIconPath": "images/nav/mycenter_h.png",
+            "iconPath": "images/nav/mycenter.png",
+            "pagePath": "pages/mycenter/mycenter",
+            "text": "我的"
+        }]
+    },
+    "networkTimeout": {
+        "request": 30000
+    }
+}

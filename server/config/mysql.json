@@ -1,0 +1,9 @@
+{
+	"host"     : "114.112.92.135",
+	"user"     : "vvpage",
+	"password" : "qw123ddaq1",
+	"port"     : 3307,
+	"charset"  : "utf8",
+	"database" : "vvpage",
+	"insecureAuth" : true
+}

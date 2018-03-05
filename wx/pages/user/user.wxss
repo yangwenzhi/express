@@ -1,0 +1,58 @@
+.container{
+    padding: 0 10rpx;
+    background: #ffffff;
+}
+
+.item {
+    width: 100%;
+    height: 120rpx;
+    line-height: 120rpx;
+    float: left;
+    padding: 0 10rpx;
+    box-sizing: border-box;
+    position: relative;
+    background: #ffffff;
+    font-size: 32rpx;
+    border-top: 1rpx solid #e7e7eb;
+}
+
+navigator{
+    width: 100%;
+    height: 120rpx;
+}
+
+.item:first-child{
+    border-top: 0;
+}
+
+.icon{
+    position: absolute;
+    right: 0; 
+    top: 0;
+    width: 60rpx;
+    height: 120rpx;
+}
+
+.icon-img{
+    width: 40rpx;
+    height: 40rpx;
+    transform:rotate(90deg);
+    margin-top: 36rpx;
+}
+
+.order{
+    float: left;
+}
+
+.state{
+    float: right;
+    padding-right: 50rpx;
+}
+
+.red {
+    color: red;
+}
+
+.green {
+    color: green;
+}

@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <% include htm/header.html %>
+    </head>
+
+    <body>
+        <div class="navbar navbar-default" id="navbar">
+            <script type="text/javascript">
+                try{ace.settings.check('navbar' , 'fixed')}catch(e){}
+            </script>
+
+            <div class="navbar-container" id="navbar-container">
+                <% include htm/title.html %>
+            </div><!-- /.container -->
+        </div>
+
+        <div class="main-container" id="main-container">
+            <script type="text/javascript">
+                try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+            </script>
+
+            <div class="main-container-inner">
+                <a class="menu-toggler" id="menu-toggler" href="#">
+                    <span class="menu-text"></span>
+                </a>
+
+                <% include htm/navbar.html %>
+
+                <div class="main-content">
+                    
+
+                    <div class="page-content">
+
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <!-- PAGE CONTENT BEGINS -->
+                                <h3 class="header smaller lighter blue"><%= title %></h3>
+                                <div class="space-12"></div>
+
+                                <form class="form-horizontal" role="form">
+                                    <% if(data) { %>
+                                        <% data.map(function (item, index) { %>
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label no-padding-right" for="form-field-tags">分类</label>
+
+                                                <div class="col-sm-3">
+                                                    <select class="form-control" id="act_type" <%= type != -1 ? 'disabled' : ''%>>
+                                                        <option value="-1">--分类--</option>
+                                                        <% map.list.map(function (item, index) { %>
+                                                            <option value="<%= item.type %>" <%= type == item.type ? 'selected' : '' %>><%= item.title %></option>
+                                                        <% }); %>
+                                                    </select>
+                                                </div>
+                                                <span class="help-inline">
+                                                    <a class="middle" style="line-height: 30px;" href="/md/<%= type %>">规则说明</a>
+                                                </span>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label no-padding-right" for="form-field-tags">活动ID</label>
+
+                                                <div class="col-sm-9">
+                                                    <input type="text" name="tags" id="act_id" value="<%= item.act_id %>" placeholder="" <%= type != -1 ? 'disabled' : ''%> />
+                                                </div>
+                                            </div>
+
+                                            <div class="space-4"></div>
+
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label no-padding-right" for="form-field-tags">活动标题</label>
+
+                                                <div class="col-sm-9">
+                                                    <textarea class="form-control limited" id="act_title" maxlength="500"><%= item.act_title %></textarea>
+                                                </div>
+                                            </div>
+
+                                            <div class="space-4"></div>
+
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label no-padding-right" for="form-field-tags">分享描述</label>
+
+                                                <div class="col-sm-9">
+                                                    <textarea class="form-control limited" id="act_desc" maxlength="500"><%= item.act_desc %></textarea>
+                                                </div>
+                                            </div>
+
+                                            <div class="space-4"></div>
+
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label no-padding-right" for="form-field-4">css</label>
+
+                                                <div class="col-sm-9">
+                                                    <textarea class="form-control limited" style="height: 300px;" id="act_scss"><%= item.act_scss %></textarea>
+                                                </div>
+                                            </div>
+
+                                            <div class="space-4"></div>
+
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label no-padding-right" for="form-field-4">上传图片资源</label>
+
+                                                <div class="col-sm-9">
+                                                    <a class="btn btn-app btn-purple btn-sm" href="/upload/<%= item.act_type%>/<%= item.act_id%>">
+                                                        <i class="icon-cloud-upload bigger-200"></i>
+                                                        Upload
+                                                    </a>
+                                                </div>
+                                            </div>
+
+                                            <div class="space-4"></div>
+
+                                            <div class="clearfix form-actions">
+                                                <div class="col-md-offset-3 col-md-9">
+                                                    <button class="btn btn-info" type="button" id="send">
+                                                        <i class="icon-ok bigger-110"></i>
+                                                        Submit
+                                                    </button>
+
+                                                    &nbsp; &nbsp; &nbsp;
+                                                    <% if(type == -1) { %>
+                                                    <button class="btn" type="reset">
+                                                        <i class="icon-undo bigger-110"></i>
+                                                        Reset
+                                                    </button>
+                                                    <% } %>
+                                                </div>
+                                            </div>
+                                        <% }); %>
+                                    <% } else { %>
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label no-padding-right" for="form-field-tags">分类</label>
+
+                                            <div class="col-sm-3">
+                                                <select class="form-control" id="act_type" <%= type != -1 ? 'disabled' : ''%>>
+                                                    <option value="-1">--分类--</option>
+                                                    <% map.list.map(function (item, index) { %>
+                                                        <option value="<%= item.type %>" <%= type == item.type ? 'selected' : '' %>><%= item.title %></option>
+                                                    <% }); %>
+                                                </select>
+                                            </div>
+                                            <span class="help-inline hidden" id="md_btn">
+                                                <a class="middle" style="line-height: 30px;" href="javascript:;">规则说明</a>
+                                            </span>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label no-padding-right" for="form-field-tags">活动ID</label>
+
+                                            <div class="col-sm-9">
+                                                <input type="text" name="tags" id="act_id" value="" placeholder="" <%= type != -1 ? 'disabled' : ''%> />
+                                            </div>
+                                        </div>
+
+                                        <div class="space-4"></div>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label no-padding-right" for="form-field-tags">活动标题</label>
+
+                                            <div class="col-sm-9">
+                                                <textarea class="form-control limited" id="act_title" maxlength="500"></textarea>
+                                            </div>
+                                        </div>
+
+                                        <div class="space-4"></div>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label no-padding-right" for="form-field-tags">分享描述</label>
+
+                                            <div class="col-sm-9">
+                                                <textarea class="form-control limited" id="act_desc" maxlength="500"></textarea>
+                                            </div>
+                                        </div>
+
+                                        <div class="space-4"></div>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label no-padding-right" for="form-field-4">css</label>
+
+                                            <div class="col-sm-9">
+                                                <textarea class="form-control limited" style="height: 300px;" id="act_scss"></textarea>
+                                            </div>
+                                        </div>
+
+                                        <div class="space-4"></div>
+
+                                        <div class="clearfix form-actions">
+                                            <div class="col-md-offset-3 col-md-9">
+                                                <button class="btn btn-info" type="button" id="send">
+                                                    <i class="icon-ok bigger-110"></i>
+                                                    Submit
+                                                </button>
+
+                                                &nbsp; &nbsp; &nbsp;
+                                                <% if(type == -1) { %>
+                                                <button class="btn" type="reset">
+                                                    <i class="icon-undo bigger-110"></i>
+                                                    Reset
+                                                </button>
+                                                <% } %>
+                                            </div>
+                                        </div>
+                                    <% } %>
+                                </form>
+
+                                <!-- PAGE CONTENT ENDS -->
+                            </div><!-- /.col -->
+                        </div><!-- /.row -->
+                    </div><!-- /.page-content -->
+                </div><!-- /.main-content -->
+
+                
+            </div><!-- /.main-container-inner -->
+
+            <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+                <i class="icon-double-angle-up icon-only bigger-110"></i>
+            </a>
+        </div><!-- /.main-container -->
+
+        <!-- basic scripts -->
+
+        <% include htm/footer.html %>
+
+        <script type="text/javascript">
+            var state = <%= type %>;
+            $('#send').on('click', function() {
+                $.ajax({
+                    type: "POST",
+                    url: "/api/data/add",
+                    data: {
+                        "state": state,
+                        "id": $('#act_id').val(),
+                        "type": $('#act_type').val(),
+                        "title": $('#act_title').val(),
+                        "desc": $('#act_desc').val(),
+                        "scss": $('#act_scss').val()
+                    },
+                    success: function(data){
+                        if(data.code == 200) {
+                            if(state == -1) location.href = "/upload/" + $('#act_type').val() + '/' + $('#act_id').val();
+                            else location.href = "/list/" + $('#act_type').val();
+                        }
+                        else alert(data.msg);
+                    }
+                });
+            });
+            $('#act_type').on('change', function(){
+                var t = $(this);
+                if(t.val() == -1) {
+                    $('#md_btn').addClass('hidden');
+                    $('#md_btn a').attr('href', 'javascript:;');
+                } else {
+                    $('#md_btn').removeClass('hidden');
+                    $('#md_btn a').attr('href', '/md/' + t.val());
+                }
+            });
+        </script>
+
+</body>
+</html>
+

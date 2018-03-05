@@ -1,0 +1,28 @@
+<!--index.wxml-->
+<view class="container">
+    <view class="header">
+    	<view class="select">
+    		<input type="text" class="input" class="input-placeholder" name="name" placeholder="请输入快递单号" bindconfirm="goselect" confirm-type="search" value="{{message}}" />
+    		<image class="userinfo-avatar" src="../../images/sao.png" background-size="cover" bindtap="bindViewTap"></image>
+    	</view>
+    </view>
+    <view class="result">
+    	<view class="usermotto2">
+            <view><text class="user-motto">快递单号：{{message}}（顺丰）</text></view>
+        </view>
+        <view class="usermotto">
+        	<view><text class="user-motto">操作人：大智</text></view>
+        	<view><text class="user-motto">操作站点：菜鸟驿站</text></view>
+            <view><text class="user-motto">入库时间：2018-2-28</text></view>
+            <view><text class="user-motto">出库时间：2018-3-10</text></view>
+        </view>
+    </view>
+    <view class="result">
+    	<view class="usermotto2">
+            <view><text class="user-motto">快递单号：{{message}}</text></view>
+        </view>
+        <view class="usermotto">
+        	<view><text class="user-motto">暂无结果</text></view>
+        </view>
+    </view>
+</view>

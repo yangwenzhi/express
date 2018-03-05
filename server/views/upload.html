@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <% include htm/header.html %>
+    </head>
+
+    <body>
+        <div class="navbar navbar-default" id="navbar">
+            <script type="text/javascript">
+                try{ace.settings.check('navbar' , 'fixed')}catch(e){}
+            </script>
+
+            <div class="navbar-container" id="navbar-container">
+                <% include htm/title.html %>
+            </div><!-- /.container -->
+        </div>
+
+        <div class="main-container" id="main-container">
+            <script type="text/javascript">
+                try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+            </script>
+
+            <div class="main-container-inner">
+                <a class="menu-toggler" id="menu-toggler" href="#">
+                    <span class="menu-text"></span>
+                </a>
+
+                <% include htm/navbar.html %>
+
+                <div class="main-content">
+                    
+
+                    <div class="page-content">
+
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <!-- PAGE CONTENT BEGINS -->
+                                <h3 class="header smaller lighter blue"><%= title %>
+                                    <small>
+                                        <i class="icon-double-angle-right"></i>
+                                        上传图片资源
+                                    </small>
+                                </h3>
+                                <div class="space-12"></div>
+
+                                <form class="form-horizontal" role="form">
+                                    <% data.map(function (item, index) { %>
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label no-padding-right" for="form-field-tags">分类</label>
+
+                                            <div class="col-sm-3">
+                                                <select class="form-control" id="act_type" <%= type != -1 ? 'disabled' : ''%>>
+                                                    <option value="">--分类--</option>
+                                                    <% map.list.map(function (item, index) { %>
+                                                        <option value="<%= item.type %>" <%= type == item.type ? 'selected' : '' %>><%= item.title %></option>
+                                                    <% }); %>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label no-padding-right" for="form-field-tags">活动ID</label>
+
+                                            <div class="col-sm-9">
+                                                <input type="text" name="tags" id="act_id" value="<%= item.act_id %>" placeholder="" <%= type != -1 ? 'disabled' : ''%> />
+                                            </div>
+                                        </div>
+
+                                        <div class="space-4"></div>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label no-padding-right" for="form-field-4">上传背景图(pc)</label>
+
+                                            <div class="col-sm-6">
+                                                <div class="ace-file-input" style="float:left; width: 250px;">
+                                                    <input type="file" id="id-input-file-1" multiple="multiple" />
+                                                    <label for="id-input-file-1" class="file-label selected" data-title="Change">
+                                                        <span class="file-name" data-title="<%= item.act_img_pc == 1 ? '图片已存在，可替换' : '上传图片' %>">
+                                                            <i class="icon-picture"></i>
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                                <a class="btn btn-sm btn-danger" style="float: left;" id="id-input-btn-1">上传</a>
+                                                <div class="smaller lighter grey hidden loading" style="float: left; padding: 8px 0 0 5px;">
+                                                    <i class="icon-spinner icon-spin orange bigger-125"></i>
+                                                    上传中...
+                                                </div>
+                                                <span id="result1" style="float: left; padding: 8px 0 0 5px;"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="space-4"></div>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label no-padding-right" for="form-field-4">上传背景图(m)</label>
+
+                                            <div class="col-sm-6">
+                                                <div class="ace-file-input" style="float:left; width: 250px;">
+                                                    <input type="file" id="id-input-file-2" multiple="multiple" />
+                                                    <label for="id-input-file-2" class="file-label selected" data-title="Change">
+                                                        <span class="file-name" data-title="<%= item.act_img_m == 1 ? '图片已存在，可替换' : '上传图片' %>">
+                                                            <i class="icon-picture"></i>
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                                <a class="btn btn-sm btn-danger" style="float: left;" id="id-input-btn-2">上传</a>
+                                                <div class="smaller lighter grey hidden loading" style="float: left; padding: 8px 0 0 5px;">
+                                                    <i class="icon-spinner icon-spin orange bigger-125"></i>
+                                                    上传中...
+                                                </div>
+                                                <span id="result2" style="float: left; padding: 8px 0 0 5px;"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="space-4"></div>
+
+                                        <div class="clearfix form-actions">
+                                            <div class="col-md-offset-3 col-md-9">
+                                                <button class="btn btn-info" type="button" id="send">
+                                                    <i class="icon-ok bigger-110"></i>
+                                                    Submit
+                                                </button>
+                                            </div>
+                                        </div>
+                                    <% }); %>
+                                </form>
+
+                                <!-- PAGE CONTENT ENDS -->
+                            </div><!-- /.col -->
+                        </div><!-- /.row -->
+                    </div><!-- /.page-content -->
+                </div><!-- /.main-content -->
+
+                
+            </div><!-- /.main-container-inner -->
+
+            <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+                <i class="icon-double-angle-up icon-only bigger-110"></i>
+            </a>
+        </div><!-- /.main-container -->
+
+        <!-- basic scripts -->
+
+        <% include htm/footer.html %>
+
+        <script type="text/javascript">
+            $('#send').on('click', function() {
+                location.href = "/list/" + $('#act_type').val();
+            });
+        </script>
+
+        <script type="text/javascript">
+            // function uploadFile(){
+            //     var formData = new FormData();
+            //     var files = document.getElementById("id-input-file-1").files;
+            //     formData.enctype="multipart/form-data";
+            //     var fileArray = [].slice.call(files,0);//类数组转换为数组
+            //     fileArray.forEach(function(file){
+            //         formData.append("file", file);//循环遍历把文件对象插到formData对象上
+            //     });
+            //     var xhr = new XMLHttpRequest();
+            //     xhr.open("post", "/uploader/2000110", true);//发送post请求到/uploader
+            //     xhr.onload = function (e) {
+            //         if(this.status == 200){
+            //             // document.getElementById("result").innerHTML = this.response;
+            //         }
+            //     };
+            //     xhr.send(formData);
+            // }
+            // var input = document.getElementById("id-input-btn-1");
+            // input.onclick = uploadFile;//绑定事件
+
+            $('#id-input-btn-1').click(function(){
+                upload(1);
+            });
+
+            $('#id-input-btn-2').click(function(){
+                upload(2);
+            });
+
+            $('#id-input-file-1, #id-input-file-2').change(function(){
+                $(this).next().find('span').attr('data-title', '图片已选');
+            });
+
+            function upload(i) {
+                
+                var act_id = $('#act_id').val(),
+                    act_type = $('#act_type').val();
+
+                if(!act_type) {
+                    alert('请选择活动分类');
+                    return;
+                }
+                if(!act_id) {
+                    alert('请正确填写活动ID');
+                    return;
+                }
+                if($("#id-input-file-" + i).val() == '') {
+                    alert('请选择图片');
+                    return;
+                }
+
+                $("#result" + i).html('');
+                $("#id-input-btn-" + i).siblings('.loading').removeClass('hidden');
+
+                var formData = new FormData();
+                var files = $("#id-input-file-" + i)[0].files;
+                formData.enctype = "multipart/form-data";
+                var fileArray = [].slice.call(files,0);//类数组转换为数组
+                fileArray.forEach(function(file){
+                    formData.append("file", file);//循环遍历把文件对象插到formData对象上
+                });
+
+                $.ajax({
+                    url: '/uploader/' + (i == 1 ? 'pc' : 'm') + '/' + act_type + '/' + act_id,
+                    type: 'POST',
+                    data: formData,
+                    cache: false,
+                    processData: false,
+                    contentType: false,
+                    success: function(data) {
+                        var data = JSON.parse(data);
+                        if(data.code == 200) {
+                            $("#id-input-file-" + i).val('');
+                            $("#result" + i).html(data.msg);
+                            $("#id-input-file-" + i).next().find('span').attr('data-title', '图片已存在，可替换');
+                            $("#id-input-btn-" + i).siblings('.loading').addClass('hidden');
+                        }
+                    }
+                });
+            }
+        </script>
+</body>
+</html>
+

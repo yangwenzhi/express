@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>#title#</title>
+    <%- include('../../../../vv-base/htm/meta.htm') %>
+    <link rel="stylesheet" type="text/css" href="../css/#id#.css<%= version ? '?v=' + version : ''%>">
+    <script type="text/javascript" >
+        var freeGiftID = #id#;
+        var share = {
+            'title': '#title#',
+            'desc': '#desc#'
+        }
+    </script>
+</head>
+<body>
+    <%- include('../component/htm/aside.htm') %>
+    <%- include('../../../../vv-base/htm/download.htm') %>
+    <%- include('../../../../vv-base/htm/footer.htm') %>
+<script type="text/javascript" src="../../../../vv-base/js/source/jquery-1.8.3.js"></script>
+<script type="text/javascript" src="../js/index.js<%= version ? '?v=' + version : ''%>"></script>
+</body>
+</html>

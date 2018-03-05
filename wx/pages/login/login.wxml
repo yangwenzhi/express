@@ -1,0 +1,65 @@
+<!--index.wxml-->
+<view class="container">
+    <form bindsubmit="formSubmit" class="container2" wx:if="{{type == 1}}">
+        <input name="userid" maxlength="20" placeholder="工号" />
+        <input name="password" maxlength="50" placeholder="密码" password />
+        <button formType="submit">登录</button>
+    </form>
+    <view wx:if="{{type == 2}}">
+
+        <form bindsubmit="formSubmit" class="container2">
+            <input type="text" placeholder-class="input-placeholder" name="name" placeholder="姓名" />
+            <input type="number" placeholder-class="input-placeholder" name="tel" placeholder="手机号码" maxlength="11" />
+            <view class="form-item">
+                <view class="form-item-bd" bindtap="showDistpicker">
+                    <view class="input {{!provinceName[provinceSelIndex] ? 'input-placeholder' : ''}}">
+                        <block wx:if="{{provinceName[provinceSelIndex]}}">{{provinceName[provinceSelIndex]}} {{cityName[citySelIndex]}} {{districtName[districtSelIndex]}}</block>
+                        <block wx:else>所在地区</block>
+                    </view>
+                    <input type="text" name="province" value="{{provinceName[provinceSelIndex]}}" class="hidden" />
+                    <input type="text" name="city" value="{{cityName[citySelIndex]}}" class="hidden" />
+                    <input type="text" name="district" value="{{districtName[districtSelIndex]}}" class="hidden" />
+                </view>
+            </view>
+            <input type="text" placeholder-class="input-placeholder" name="address" placeholder="详细地址" maxlength="50" />
+            <input type="text" placeholder-class="input-placeholder" name="ename" placeholder="站点名" maxlength="50" />
+            <input name="password" maxlength="50" placeholder="设置密码" password />
+            <input name="cpassword" maxlength="50" placeholder="确认密码" password />
+            <input type="text" name="code" value="{{code}}" class="hidden" />
+            <input type="text" name="openid" value="{{openid}}" class="hidden" />
+            <button formType="submit">提交申请</button>
+        </form>
+        <view class="distpicker {{showDistpicker ? '' : 'hidden'}}">
+            <view class="distpicker-btn">
+                <view class="distpicker-cancel-btn" bindtap="distpickerCancel">取消</view>
+                <view class="distpicker-sure-btn" bindtap="distpickerSure">确定</view>
+            </view> 
+            <picker-view indicator-style="height: 40px;" class="distpicker-content" value="{{value}}" bindchange="changeArea">
+                <!-- 省 -->
+                <picker-view-column>
+                    <view wx:for="{{provinceName}}" wx:key="province" class="area-item">{{item}}</view>
+                </picker-view-column>
+                <!-- 市 -->
+                <picker-view-column>
+                    <view wx:for="{{cityName}}" wx:key="city" class="area-item">{{item}}</view>
+                </picker-view-column>
+                <!-- 区 -->
+                <picker-view-column>
+                    <view wx:for="{{districtName}}" wx:key="district" class="area-item">{{item}}</view>
+                </picker-view-column>
+            </picker-view>
+        </view>
+        <view class="mask" catchtap="distpickerCancel" hidden="{{!showDistpicker}}"></view>
+        <view class="message {{showMessage ? 'fade-in' : ''}}" hidden="{{!showMessage}}">{{messageContent}}</view>
+
+    </view>
+    <view wx:if="{{state == 1}}" class="msg">
+        您的加盟申请已经提交成功，
+        <text class="number">工号：{{userStatus.id}}</text>
+        ，客服正在审核，审核时长1-3个工作日，请耐心等待！
+        <view style="margin-top:10px;">工号和密码是登录的唯一凭证，请妥善保存！</view>
+    </view>
+    <view wx:if="{{state == 2}}" class="msg">
+        您的账号存在异常，请及时联系客户，电话：13800138000
+    </view>
+</view>

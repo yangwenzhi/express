@@ -1,0 +1,44 @@
+{
+	"1" : {
+		"type": "1",
+		"name": "vvshow",
+		"title": "VVShow抽奖"
+	},
+	"2" : {
+		"type": "2",
+		"name": "lottery",
+		"title": "V篇抽奖"
+	},
+	"3" : {
+		"type": "3",
+		"name": "freegift",
+		"title": "免费礼物排行榜"
+	},
+	"4" : {
+		"type": "4",
+		"name": "welfare",
+		"title": "星票返利"
+	},
+	"list": [
+		{
+			"type": "1",
+			"name": "vvshow",
+			"title": "VVShow抽奖"
+		},
+		{
+			"type": "2",
+			"name": "lottery",
+			"title": "V篇抽奖"
+		},
+		{
+			"type": "3",
+			"name": "freegift",
+			"title": "免费礼物排行榜"
+		},
+		{
+			"type": "4",
+			"name": "welfare",
+			"title": "星票返利"
+		}
+	]
+}

@@ -1,0 +1,11 @@
+<view class="container" wx:for="{{order}}" wx:key="orderId" wx:for-item="item">
+
+    <view class="item">
+    	<view class="order">{{item.id}}</view>
+        <view class="state">
+            <text wx:if="{{item.state==1}}" class="red">未出库</text>
+            <text wx:if="{{item.state==2}}">已出库</text>
+        </view>
+    </view>
+    
+</view>

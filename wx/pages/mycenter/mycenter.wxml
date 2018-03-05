@@ -1,0 +1,53 @@
+<view class="container">
+    <view class="header">
+        <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
+      	<view class="header-content">
+      		<view class="header-item0">
+      			<view class="header-item">工号：105 </view>
+      			<view class="header-item"></view>
+      		</view>
+      		<view>
+      			<view class="header-item">今日入库：100 </view>
+      			<view class="header-item">今日出库：80 </view>
+      		</view>
+      		<view>
+      			<view class="header-item">总入库：100 </view>
+      			<view class="header-item">总出库：80 </view>
+      		</view>
+      	</view>
+    </view>
+
+    <view class="item">
+	    <navigator hover-class="none" url="../tongji/tongji?class=1">
+	    	<image class="userinfo-avatar2" src="../../images/icon/outer.png" background-size="cover" bindtap="bindViewTap"></image>
+	    	<view class="userinfo-text">今日统计</view>
+	    	<view class="icon"><image class="icon-img" src="../../images/icon.png" background-size="cover"></image></view>
+	    </navigator>
+	</view>
+
+	<view class="item">
+	    <navigator hover-class="none" url="../tongji/tongji?class=2">
+	    	<image class="userinfo-avatar2" src="../../images/icon/join.png" background-size="cover" bindtap="bindViewTap"></image>
+	    	<view class="userinfo-text">历史统计</view>
+	    	<view class="icon"><image class="icon-img" src="../../images/icon.png" background-size="cover"></image></view>
+	    </navigator>
+	</view>
+
+	<block wx:if="{{level == 2 || level == 3}}">
+		<view class="item">
+		    <navigator hover-class="none" url="../addexpress/addexpress">
+		    	<image class="userinfo-avatar2" src="../../images/icon/chuku.png" background-size="cover" bindtap="bindViewTap"></image>
+		    	<view class="userinfo-text">快递管理</view>
+		    	<view class="icon"><image class="icon-img" src="../../images/icon.png" background-size="cover"></image></view>
+		    </navigator>
+		</view>
+
+		<view class="item">
+		    <navigator hover-class="none" url="../user/user">
+		    	<image class="userinfo-avatar2" src="../../images/icon/user.png" background-size="cover" bindtap="bindViewTap"></image>
+		    	<view class="userinfo-text">账号审核</view>
+		    	<view class="icon"><image class="icon-img" src="../../images/icon.png" background-size="cover"></image></view>
+		    </navigator>
+		</view>
+	</block>
+</view>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <% include htm/header.html %>
+    </head>
+
+    <body>
+        <div class="navbar navbar-default" id="navbar">
+            <script type="text/javascript">
+                try{ace.settings.check('navbar' , 'fixed')}catch(e){}
+            </script>
+
+            <div class="navbar-container" id="navbar-container">
+                <% include htm/title.html %>
+            </div><!-- /.container -->
+        </div>
+
+        <div class="main-container" id="main-container">
+            <script type="text/javascript">
+                try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+            </script>
+
+            <div class="main-container-inner">
+                <a class="menu-toggler" id="menu-toggler" href="#">
+                    <span class="menu-text"></span>
+                </a>
+
+                <% include htm/navbar.html %>
+
+                <div class="main-content">
+                    
+
+                    <div class="page-content">
+
+                        <div class="row">
+                                    <div class="col-xs-12">
+                                        <h3 class="header smaller lighter blue">
+                                            <%= title %>
+                                            <a style="float: right;" href="/md/<%= type %>">
+                                                规则说明
+                                                <i class="icon-double-angle-right"></i>
+                                            </a>
+                                        </h3>
+                                        <div class="table-responsive">
+                                            <table id="sample-table-2" class="table table-striped table-bordered table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="center">ID</th>
+                                                        <th>Type</th>
+                                                        <th>Title</th>
+                                                        <th>创建时间</th>
+                                                        <th>修改时间</th>
+                                                        <th>PC生成时间</th>
+                                                        <th>移动生成时间</th>
+                                                        <th>操作</th>
+                                                        <th colspan="2">生成&预览</th>
+                                                    </tr>
+                                                </thead>
+
+                                                <tbody>
+                                                    <% data.map(function (item, index) { %>                
+                                                        <tr>
+                                                            <td class="center"><%= item.act_id %></td>
+                                                            <th><%= map[item.act_type].title %></th>
+                                                            <td><%= item.act_title %></td>
+                                                            <td><%= item.create_time ? moment(item.create_time).format('YYYY-MM-DD h:mm:ss a') : '-' %></td>
+                                                            <td><%= item.update_time ? moment(item.update_time).format('YYYY-MM-DD h:mm:ss a') : '-' %></td>
+                                                            <td><%= item.build_time_pc ? moment(item.build_time_pc).format('YYYY-MM-DD h:mm:ss a') : '-' %></td>
+                                                            <td><%= item.build_time_m ? moment(item.build_time_m).format('YYYY-MM-DD h:mm:ss a') : '-' %></td>
+                                                            <td>
+                                                                <div class="visible-md visible-lg hidden-sm hidden-xs action-buttons" style="width: 50px;">
+                                                                    <a class="red delete" href="javascript:;" data-id="<%= item.id %>" title="删除">
+                                                                        <i class="icon-trash bigger-130"></i>
+                                                                    </a>
+                                                                    <a class="green edit" href="/detail/<%= type%>/<%= item.act_id %>" title="编辑">
+                                                                        <i class="icon-pencil bigger-130"></i>
+                                                                    </a>
+                                                                </div>
+                                                            </td>
+                                                            <td data-title="<%= item.act_title %>" data-desc="<%= item.act_desc %>" data-scss="<%= item.act_scss %>">
+                                                                <div class="visible-md visible-lg hidden-sm hidden-xs action-buttons" style="width: 60px;">
+                                                                    <span class="label label-sm label-warning create" style="cursor: pointer;" data-id="<%= item.act_id %>" data-oc="m">生成移动</span>
+                                                                    <span class="label label-sm label-success preview" style="cursor: pointer;" data-id="<%= item.act_id %>" data-oc="m">预览移动</span>
+                                                                </div>
+                                                            </td>
+                                                            <td data-title="<%= item.act_title %>" data-desc="<%= item.act_desc %>" data-scss="<%= item.act_scss %>">
+                                                                <div class="visible-md visible-lg hidden-sm hidden-xs action-buttons" style="width: 60px;">
+                                                                    <span class="label label-sm label-warning create" style="cursor: pointer;" data-id="<%= item.act_id %>" data-oc="pc">生成PC</span>
+                                                                    <span class="label label-sm label-success preview" style="cursor: pointer;" data-id="<%= item.act_id %>" data-oc="pc">预览PC</span>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    <% }); %>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div><!-- /.row -->
+                    </div><!-- /.page-content -->
+                </div><!-- /.main-content -->
+
+                
+            </div><!-- /.main-container-inner -->
+
+            <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+                <i class="icon-double-angle-up icon-only bigger-110"></i>
+            </a>
+        </div><!-- /.main-container -->
+
+        <!-- basic scripts -->
+
+        <% include htm/footer.html %>
+
+        <div id="drag" style="position: absolute; left: 0; right: 0; top: 0; bottom: 0; background: rgba(0, 0, 0, 0.6); z-index: 1000; display: none;">
+            <h3 class="smaller lighter white" style="width: 200px; margin: 300px auto;">
+                <i class="icon-spinner icon-spin orange bigger-125"></i>
+                生成中...
+            </h3>
+        </div>
+
+        <script type="text/javascript">
+            $('.create').on('click', function() {
+                if(confirm('确定要生成吗？')) {
+                    var t = $(this);
+                    var oc = t.attr('data-oc');
+                    var act_id = t.attr('data-id');
+                    var act_title = t.parents('td').attr('data-title');
+                    var act_desc = t.parents('td').attr('data-desc');
+                    var act_scss = t.parents('td').attr('data-scss');
+                    t.unbind("click").removeClass('create');
+                    $('#drag').show();
+                    $.ajax({
+                        type: "POST",
+                        url: "/api/data/create/"+oc+"/<%= type %>",
+                        data: {
+                            "id": act_id,
+                            "title": act_title,
+                            "desc": act_desc, 
+                            "scss": act_scss
+                        },
+                        success: function(data){
+                            $('#drag').hide();
+                            if(data.code == 200) location.reload();
+                            else alert(data.msg);
+                        }
+                    });
+                }
+            });
+            $('.delete').on('click', function() {
+                if(confirm('确定要删除吗？')) {
+                    var t = $(this);
+                    var id = t.attr('data-id');
+                    t.unbind("click").removeClass('delete');
+                    $.ajax({
+                        type: "POST",
+                        url: "/delete",
+                        data: {
+                            "id": id
+                        },
+                        success: function(data){
+                            if(data.code == 200) location.reload();
+                            else alert(data.msg);
+                        }
+                    });
+                }
+            });
+            $('.preview').on('click', function() {
+                var t = $(this);
+                var oc = t.attr('data-oc');
+                var act_id = t.attr('data-id');
+                var url = oc == 'm' ? 'wx/m/active' : 'pc/subject';
+                window.open('https://p.51vv.com/' + url + '/<%= map[type].name %>/dist/html/' + act_id + '.html');
+            });
+        </script>
+</body>
+</html>
+

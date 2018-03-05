@@ -1,0 +1,18 @@
+<view class="section" wx:if="{{class == 2}}">  
+	<picker mode="date" value="{{date}}" start="2000-09-01" end="2020-09-01" bindchange="bindDateChange">  
+		<view class="picker">  
+			日期: {{date}}  
+		</view>  
+	</picker>  
+</view>  
+
+<view class="container">
+
+    <view class="item" wx:for="{{category}}" wx:key="categoryId" wx:for-item="item">
+        <navigator hover-class="none" url="../order/order?category={{item.id}}&name={{item.name}}">
+        	{{item.name}} (50/100)
+        	<view class="icon"><image class="icon-img" src="../../images/icon.png" background-size="cover"></image></view>
+        </navigator>
+    </view>
+    
+</view>
