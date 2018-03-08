@@ -1,6 +1,6 @@
 <view class="container">
 
-    <view class="item" wx:for="{{userlist}}" wx:key="userId" wx:for-item="item">
+    <view class="item" wx:for="{{userlist}}" wx:key="userId" wx:for-item="item" wx:if="{{item.id != userid}}">
         <navigator hover-class="none" url="../userdetail/userdetail?id={{item.id}}">
             <view class="order">{{item.id}}</view>
             <view class="state">

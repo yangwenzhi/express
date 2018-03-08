@@ -1,5 +1,8 @@
-.container{
+.container {
     padding: 0 10rpx;
+}
+
+.container2 {
     background: #ffffff;
 }
 
@@ -43,4 +46,10 @@
     color: #aaa;
     border-radius: 10rpx;
     font-size: 30rpx;
+}
+
+.userinfo-avatar2 {
+    width: 300rpx;
+    height: 300rpx;
+    margin-top: 300rpx;
 }

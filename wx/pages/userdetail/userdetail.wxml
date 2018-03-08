@@ -1,21 +1,26 @@
 <view class="container">
     <view class="item">
-        <view class="userinfo-text">工号：1005</view>
+        <view class="userinfo-text">工号：{{message.id}}</view>
     </view>
     <view class="item">
-        <view class="userinfo-text">姓名：杨大智</view>
+        <view class="userinfo-text">姓名：{{message.name || '-'}}</view>
     </view>
     <view class="item">
-        <view class="userinfo-text">电话：15012034033</view>
+        <view class="userinfo-text">电话：{{message.tel || '-'}}</view>
     </view>
     <view class="item">
-        <view class="userinfo-text">地址：内蒙古-呼和浩特-武川-大白泥壕村198号大白泥壕村198号大白泥壕村198号</view>
+        <view class="userinfo-text">地址：{{message.province}}{{message.city}}{{message.district}}{{message.address}}</view>
     </view>
     <view class="item">
-        <view class="userinfo-text">站点名：菜鸟驿站</view>
+        <view class="userinfo-text">站点名：{{message.ename || '-'}}</view>
     </view>
     <view class="item">
-        <view class="userinfo-text">状态：待审核</view>
+        <view class="userinfo-text">申请时间：{{message.createtime || '-'}}</view>
+    </view>
+    <view class="item">
+        <view class="userinfo-text" wx:if="{{message.power==0}}">状态：待审核</view>
+        <view class="userinfo-text" wx:if="{{message.power==1}}">状态：正常</view>
+        <view class="userinfo-text" wx:if="{{message.power==2}}">状态：黑户</view>
     </view>
     <view class="btn">
         <view class="btn-save btn-save1" bindtap="bindViewTap1">拉黑</view>

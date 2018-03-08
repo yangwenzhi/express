@@ -8,8 +8,8 @@
             <view><text class="user-motto">扫码结果</text></view>
         </view>
         <view class="usermotto">
-            <view><text class="user-motto">快递公司：{{name}}</text></view>
-            <view><text class="user-motto">快递单号：{{info.result}}</text></view>
+            <view><text class="user-motto">快递公司：{{name || '-'}}</text></view>
+            <view><text class="user-motto">快递单号：{{info.result || '-'}}</text></view>
         </view>
         <input type="text" name="category" value="{{category}}" class="hidden" />
         <input type="text" name="product" value="{{info.result}}" class="hidden" />

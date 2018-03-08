@@ -1,4 +1,4 @@
-//获取应用实例
+var base = require('../../common/base');
 var app = getApp();
 Page({
     data: {
@@ -8,7 +8,9 @@ Page({
     onLoad: function (options) {
         console.log('onLoad')
         var that = this;
-
+        this.setData({
+            userid: wx.getStorageSync('userid')
+        });
         wx.setNavigationBarTitle({
             title: '添加快递公司'
         });
@@ -31,32 +33,29 @@ Page({
             title: '添加中',
         });
         //快递公司名称编号不能重复
-        wx.request({
-            url: 'https://api.qucaimi.com/index.php?r=site/login',
+        base.ajax({
+            url: 'https://api.qucaimi.com/index.php?r=site/addcategory',
             data: {
-                id: that.data.loginInfo.userid,
-                password: that.data.loginInfo.password,
+                userid: that.data.userid,
+                name: that.data.express.name,
+                tag: that.data.express.tag
             },
-            header: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'X-UA': 'minprogram'
-            },
-            method: 'POST',
-            success: function(res) {
-                if(res.data.state == 1002) {
-                    wx.showToast({
-                        title: '添加成功',
-                        icon: 'success',
-                        duration: 2000
-                    });
-                    wx.hideLoading();
-                } else {
-                    that.toast(res.data.result);
-                }
+            method: 'POST'
+        }, function(res){
+            if(res.data.state == 1002) {
+                wx.showToast({
+                    title: '添加成功',
+                    icon: 'success',
+                    duration: 2000
+                });
+                that.setData({
+                    express: {}
+                });
+                wx.hideLoading();
+            } else {
+                that.toast(res.data.result);
             }
         });
-            
-        
     },
     toast: function(t) {
         wx.showToast({

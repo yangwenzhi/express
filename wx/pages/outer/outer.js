@@ -1,38 +1,53 @@
-//index.js
-//获取应用实例
-var app = getApp()
+var base = require('../../common/base');
+var app = getApp();
+var timer = null;
 Page({
     data: {
         userid: '',
         info: {},
-        message: ''
+        productid: ''
     },
     //事件处理函数
     bindViewTap: function() {
         var that = this;
         app.getDate(function(res){
             that.setData({
-                message: res.result
+                productid: res.result
             });
             that.select();
         });
     },
     select: function() {
         var that = this;
-        console.log(that.data.message);
+        console.log(that.data.productid);
         //查询接口 订单号
-        that.setData({
-            info: {
-                name: '顺丰',
-                productid: '74280934092',
-                createtime: '2018-03-05'
+
+        base.ajax({
+            url: 'https://api.qucaimi.com/index.php?r=site/query',
+            data: {
+                productid: that.data.productid,
+                userid: that.data.userid
+            },
+            method: 'POST'
+        }, function(res){
+            console.log(res);
+            if(res.data.state == 1001) {
+                that.setData({
+                    info: {
+                        name: res.data.result.express,
+                        productid: res.data.result.productid,
+                        createtime: res.data.result.createtime
+                    }
+                });
+            } else {
+                that.toast(res.data.result);
             }
         });
     },
     onLoad: function (options) {
         console.log('onLoad')
         var that = this;
-        this.setData({
+        that.setData({
             userid: wx.getStorageSync('userid')
         });
         wx.setNavigationBarTitle({
@@ -44,41 +59,42 @@ Page({
         var that = this;
         var productid = e.detail.value.productid;
         console.log({productid: productid, userid: that.data.userid})
-        wx.request({
-            url: 'https://api.qucaimi.com/index.php?r=site/order',
+        base.ajax({
+            url: 'https://api.qucaimi.com/index.php?r=site/issue',
             data: {
                 productid: productid,
                 userid: that.data.userid
             },
-            header: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'X-UA': 'minprogram'
-            },
-            method: 'POST',
-            success: function(res) {
-                console.log(res);
-                if(res.data.state == 1002) {
-                    wx.showToast({
-                        title: '出库成功',
-                        icon: 'success',
-                        duration: 2000
-                    });
-                    that.bindViewTap();
-                } else {
-                    that.toast(res.data.result);
-                    that.bindViewTap();
-                }
-                that.setData({
-                    info: {}
+            method: 'POST'
+        }, function(res){
+            console.log('出库', res);
+            if(res.data.state == 1002) {
+                wx.showToast({
+                    title: '出库成功',
+                    icon: 'success',
+                    duration: 1000
                 });
+                timer && clearTimeout(timer);
+                timer = setTimeout(function(){
+                    that.bindViewTap();
+                }, 1000);
+            } else {
+                that.toast(res.data.result);
+                timer && clearTimeout(timer);
+                timer = setTimeout(function(){
+                    that.bindViewTap();
+                }, 1000);
             }
+            that.setData({
+                info: {}
+            });
         });
     },
     toast: function(t) {
         wx.showToast({
             title: t,
             icon: 'none',
-            duration: 2000
+            duration: 1000
         });
     }
 })

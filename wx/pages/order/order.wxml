@@ -1,11 +1,15 @@
-<view class="container" wx:for="{{order}}" wx:key="orderId" wx:for-item="item">
+<view class="container container2" wx:if="{{empty == 0}}">
 
-    <view class="item">
-    	<view class="order">{{item.id}}</view>
+    <view class="item" wx:for="{{order}}" wx:key="orderId" wx:for-item="item">
+    	<view class="order">{{item.productid}}</view>
         <view class="state">
             <text wx:if="{{item.state==1}}" class="red">未出库</text>
             <text wx:if="{{item.state==2}}">已出库</text>
         </view>
     </view>
     
+</view>
+
+<view class="container" wx:if="{{empty == 1}}">
+    <image class="userinfo-avatar2" src="../../images/none2.png" background-size="cover"></image>
 </view>

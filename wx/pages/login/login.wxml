@@ -53,13 +53,16 @@
         <view class="message {{showMessage ? 'fade-in' : ''}}" hidden="{{!showMessage}}">{{messageContent}}</view>
 
     </view>
+    <view wx:if="{{state == 0}}" class="msg">
+        <image class="userinfo-avatar2" src="../../images/none1.png" background-size="cover"></image>
+    </view>
     <view wx:if="{{state == 1}}" class="msg">
-        您的加盟申请已经提交成功，
+        您的申请已经提交成功，
         <text class="number">工号：{{userStatus.id}}</text>
         ，客服正在审核，审核时长1-3个工作日，请耐心等待！
         <view style="margin-top:10px;">工号和密码是登录的唯一凭证，请妥善保存！</view>
     </view>
     <view wx:if="{{state == 2}}" class="msg">
-        您的账号存在异常，请及时联系客户，电话：13800138000
+        您的账号存在异常，请及时联系客户，电话：15010160460
     </view>
 </view>

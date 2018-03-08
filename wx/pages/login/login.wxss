@@ -49,6 +49,12 @@ button {
     font-weight: bold;
 }
 
+.userinfo-avatar2 {
+    width: 300rpx;
+    height: 300rpx;
+    margin-top: 300rpx;
+}
+
 .form-list {
     position: relative;
     margin-bottom: 20rpx;

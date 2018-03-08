@@ -3,16 +3,16 @@
         <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
       	<view class="header-content">
       		<view class="header-item0">
-      			<view class="header-item">工号：105 </view>
+      			<view class="header-item">工号：{{userid}} </view>
       			<view class="header-item"></view>
       		</view>
       		<view>
-      			<view class="header-item">今日入库：100 </view>
-      			<view class="header-item">今日出库：80 </view>
+      			<view class="header-item">今日入库：{{tongji.today_input}} </view>
+      			<view class="header-item">今日出库：{{tongji.today_output}} </view>
       		</view>
       		<view>
-      			<view class="header-item">总入库：100 </view>
-      			<view class="header-item">总出库：80 </view>
+      			<view class="header-item">总入库：{{tongji.total_input}} </view>
+      			<view class="header-item">总出库：{{tongji.total_output}} </view>
       		</view>
       	</view>
     </view>
@@ -33,7 +33,7 @@
 	    </navigator>
 	</view>
 
-	<block wx:if="{{level == 2 || level == 3}}">
+	<block wx:if="{{message.level == 2 || message.level == 3}}">
 		<view class="item">
 		    <navigator hover-class="none" url="../addexpress/addexpress">
 		    	<image class="userinfo-avatar2" src="../../images/icon/chuku.png" background-size="cover" bindtap="bindViewTap"></image>

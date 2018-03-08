@@ -1,5 +1,8 @@
-.container{
+.container {
     padding: 0 10rpx;
+}
+
+.container2 {
     background: #ffffff;
 }
 
@@ -16,7 +19,7 @@
     border-top: 1rpx solid #e7e7eb;
 }
 
-.item:before{
+.item:first-child{
     border-top: 0;
 }
 
@@ -30,4 +33,10 @@
 
 .red {
     color: red;
+}
+
+.userinfo-avatar2 {
+    width: 300rpx;
+    height: 300rpx;
+    margin-top: 300rpx;
 }

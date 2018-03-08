@@ -48,9 +48,20 @@ page {
 	z-index: 2;
 }
 
+.userinfo-avatar2 {
+	width: 300rpx;
+	height: 300rpx;
+}
+
 .result {
 	width: 100%;
 	margin-top: 50rpx;
+}
+
+.result2 {
+	width: 100%;
+	margin-top: 150rpx;
+	text-align: center;
 }
 
 .usermotto {

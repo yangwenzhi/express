@@ -1,8 +1,8 @@
 <view class="container">
 
     <form bindsubmit="formSubmit" class="container2">
-        <input name="name" maxlength="20" placeholder="快递公司名称" />
-        <input name="tag" maxlength="20" placeholder="快递公司编号" />
+        <input name="name" maxlength="20" placeholder="快递公司名称" value="{{express.name}}" />
+        <input name="tag" maxlength="20" placeholder="快递公司编号" value="{{express.tag}}" />
         <button formType="submit">添加</button>
     </form>
     

@@ -2,27 +2,30 @@
 <view class="container">
     <view class="header">
     	<view class="select">
-    		<input type="text" class="input" class="input-placeholder" name="name" placeholder="请输入快递单号" bindconfirm="goselect" confirm-type="search" value="{{message}}" />
+    		<input type="text" class="input" class="input-placeholder" name="name" placeholder="请输入快递单号" bindconfirm="goselect" confirm-type="search" value="{{productid}}" />
     		<image class="userinfo-avatar" src="../../images/sao.png" background-size="cover" bindtap="bindViewTap"></image>
     	</view>
     </view>
-    <view class="result">
+    <view class="result" wx:if="{{state == 1}}">
     	<view class="usermotto2">
-            <view><text class="user-motto">快递单号：{{message}}（顺丰）</text></view>
+            <view><text class="user-motto">快递单号：{{productid}}（{{message.express}}）</text></view>
         </view>
         <view class="usermotto">
-        	<view><text class="user-motto">操作人：大智</text></view>
-        	<view><text class="user-motto">操作站点：菜鸟驿站</text></view>
-            <view><text class="user-motto">入库时间：2018-2-28</text></view>
-            <view><text class="user-motto">出库时间：2018-3-10</text></view>
+        	<view><text class="user-motto">操作人：{{message.user_name || '-'}}</text></view>
+        	<view><text class="user-motto">操作站点：{{message.user_ename || '-'}}</text></view>
+            <view><text class="user-motto">入库时间：{{message.createtime || '-'}}</text></view>
+            <view><text class="user-motto">出库时间：{{message.outertime || '-'}}</text></view>
         </view>
     </view>
-    <view class="result">
+    <view class="result" wx:if="{{state == 2}}">
     	<view class="usermotto2">
-            <view><text class="user-motto">快递单号：{{message}}</text></view>
+            <view><text class="user-motto">快递单号：{{productid}}</text></view>
         </view>
         <view class="usermotto">
         	<view><text class="user-motto">暂无结果</text></view>
         </view>
+    </view>
+    <view class="result2" wx:if="{{state == 0}}">
+        <image class="userinfo-avatar2" src="../../images/none.png" background-size="cover"></image>
     </view>
 </view>

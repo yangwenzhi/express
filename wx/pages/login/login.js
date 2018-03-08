@@ -1,7 +1,7 @@
-//index.js
-//获取应用实例
 var area = require('../../data/area');
+var base = require('../../common/base');
 const app = getApp();
+var timer = null;
 var p = 0, c = 0, d = 0;
 
 Page({
@@ -31,8 +31,6 @@ Page({
     onLoad: function(options) {
         var that = this;
         that.setData({
-            // type: options.type,
-            // class: options.class,
             userStatus: app.globalData.userStatus,
             code: app.globalData.code,
             userid: wx.getStorageSync('userid'),
@@ -50,6 +48,16 @@ Page({
     onShow: function () {
         var that = this;
         that.getscopeLogin();
+    },
+    onPullDownRefresh: function() {
+        var that = this;
+
+        that.getUserInfoData();
+
+        timer && clearTimeout(timer);
+        timer = setTimeout(function(){
+            wx.stopPullDownRefresh(); //停止下拉刷新
+        }, 1000);
     },
     getscopeLogin: function() {
         var that = this;
@@ -82,89 +90,86 @@ Page({
                 console.log('app.globalData.userInfo');
                 console.log(app.globalData.userInfo);
 
-                wx.request({
+                base.ajax({
                     url: 'https://api.qucaimi.com/index.php?r=site/code2session',
                     data: {
                         code: app.globalData.code
-                    },
-                    header: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                        'X-UA': 'minprogram'
-                    },
-                    method: 'GET',
-                    success: function(res) {
-                        console.log('code2session');
-                        if(res.data.state == 1001) {
-                            app.globalData.openid = res.data.result.openid;
-                            wx.setStorageSync('openid', app.globalData.openid);
-                            that.setData({
-                                openid: app.globalData.openid
-                            });
-                            wx.request({
-                                url: 'https://api.qucaimi.com/index.php?r=site/getuserpower',
-                                data: {
-                                    openid: app.globalData.openid,
-                                },
-                                header: {
-                                    'Content-Type': 'application/x-www-form-urlencoded',
-                                    'X-UA': 'minprogram'
-                                },
-                                method: 'GET',
-                                success: function(res) {
-                                    console.log('getuserpower');
-                                    console.log(res.data.result);
-                                    if(res.data.state == 1001) {
-                                        app.globalData.userStatus = res.data.result;
-                                        that.setData({
-                                            userStatus: app.globalData.userStatus,
-                                        });
-                                        if(res.data.result.power == 0) {
-                                            that.setData({
-                                                type: 0,
-                                                state: 1
-                                            });
-                                            wx.setNavigationBarTitle({
-                                                title: '审核中'
-                                            });
-                                        } else if(res.data.result.power == 1) {
-                                            that.setData({
-                                                type: 1,
-                                                state: 0
-                                            });
-                                            if(that.data.userid) {
-                                                wx.setNavigationBarTitle({
-                                                    title: '站长助手'
-                                                });
-                                            } else {
-                                                wx.setNavigationBarTitle({
-                                                    title: '登录'
-                                                });
-                                            }
-                                        } else if(res.data.result.power == 2) {
-                                            that.setData({
-                                                type: 0,
-                                                state: 2
-                                            });
-                                            wx.setNavigationBarTitle({
-                                                title: '账号异常'
-                                            });
-                                        }
-                                    } else {
-                                        that.setData({
-                                            type: 2,
-                                            state: 1
-                                        });
-                                        wx.setNavigationBarTitle({
-                                            title: '权限申请'
-                                        });
-                                    }
-                                }
-                            });
-                        }
+                    }
+                }, function(res){
+                    console.log('code2session', res.data);
+                    if(res.data.state == 1001) {
+                        app.globalData.openid = res.data.result.openid;
+                        wx.setStorageSync('openid', app.globalData.openid);
+                        that.setData({
+                            openid: app.globalData.openid
+                        });
+
+                        that.getUserInfoData();
                     }
                 });
             }
         })
+    },
+    getUserInfoData: function() {
+        var that = this;
+
+        base.ajax({
+            url: 'https://api.qucaimi.com/index.php?r=site/getuserpower',
+            data: {
+                openid: app.globalData.openid
+            }
+        }, function(res){
+            console.log('getuserpower', res.data);
+            if(res.data.state == 1001) {
+                app.globalData.userStatus = res.data.result;
+                that.setData({
+                    userStatus: app.globalData.userStatus,
+                });
+                if(res.data.result.power == 0) {
+                    that.setData({
+                        type: 0,
+                        state: 1
+                    });
+                    wx.setNavigationBarTitle({
+                        title: '审核中'
+                    });
+                } else if(res.data.result.power == 1) {
+                    
+                    if(that.data.userid) {
+                        wx.setNavigationBarTitle({
+                            title: '站长助手'
+                        });
+                        wx.switchTab({
+                            url: '../index/index'
+                        });
+                    } else {
+                        that.setData({
+                            type: 1,
+                            state: 0
+                        });
+                        wx.setNavigationBarTitle({
+                            title: '登录'
+                        });
+                    }
+                } else if(res.data.result.power == 2) {
+                    that.setData({
+                        type: 0,
+                        state: 2
+                    });
+                    wx.setNavigationBarTitle({
+                        title: '账号异常'
+                    });
+                }
+            } else {
+                that.setData({
+                    type: 2,
+                    state: 0
+                });
+                wx.setNavigationBarTitle({
+                    title: '权限申请'
+                });
+            }
+        });
     },
     formSubmit: function(e) {
         var that = this;
@@ -180,27 +185,23 @@ Page({
             wx.showLoading({
                 title: '登录中',
             });
-            wx.request({
+            base.ajax({
                 url: 'https://api.qucaimi.com/index.php?r=site/login',
+                userid: that.data.loginInfo.userid,
                 data: {
                     id: that.data.loginInfo.userid,
-                    password: that.data.loginInfo.password,
+                    password: that.data.loginInfo.password
                 },
-                header: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                    'X-UA': 'minprogram'
-                },
-                method: 'POST',
-                success: function(res) {
-                    if(res.data.state == 1002) {
-                        wx.setStorageSync('userid', that.data.loginInfo.userid);
-                        wx.switchTab({
-                            url: '../index/index'
-                        });
-                        wx.hideLoading();
-                    } else {
-                        that.toast(res.data.result);
-                    }
+                method: 'POST'
+            }, function(res){
+                if(res.data.state == 1002) {
+                    wx.setStorageSync('userid', that.data.loginInfo.userid);
+                    wx.switchTab({
+                        url: '../index/index'
+                    });
+                    wx.hideLoading();
+                } else {
+                    that.toast(res.data.result);
                 }
             });
             
@@ -216,7 +217,7 @@ Page({
                 that.toast('手机号不能为空');
                 return;
             }
-            if(!(/^1[3|4|5|8][0-9]\d{4,8}$/.test(that.data.userInfo.tel))) {
+            if(!(/^1[3|4|5|6|7|8][0-9]\d{4,8}$/.test(that.data.userInfo.tel))) {
                 that.toast('手机号码格式不正确');
                 return;
             }
@@ -243,51 +244,39 @@ Page({
             wx.showLoading({
                 title: '加载中',
             });
-            wx.request({
+            base.ajax({
                 url: 'https://api.qucaimi.com/index.php?r=site/join',
                 data: that.data.userInfo,
-                header: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                    'X-UA': 'minprogram'
-                },
-                method: 'POST',
-                success: function(res) {
-                    console.log(res);
-                    if(res.data.state == 1002) {
-                        wx.request({
-                            url: 'https://api.qucaimi.com/index.php?r=site/getuserpower',
-                            data: {
-                                openid: app.globalData.openid,
-                            },
-                            header: {
-                                'Content-Type': 'application/x-www-form-urlencoded',
-                                'X-UA': 'minprogram'
-                            },
-                            method: 'GET',
-                            success: function(res) {
-                                if(res.data.state == 1001) {
-                                    wx.setNavigationBarTitle({
-                                        title: '审核中'
-                                    });
-                                    app.globalData.userStatus = res.data.result;
-                                    that.setData({
-                                        userStatus: app.globalData.userStatus,
-                                        type: 0,
-                                        state: 1
-                                    });
-                                    wx.hideLoading();
-                                    wx.showToast({
-                                        title: '申请已提交',
-                                        icon: 'success',
-                                        duration: 2000
-                                    });
-                                }
-                            }
-                        });
-                        
-                    } else {
-                        that.toast(res.data.result);
-                    }
+                method: 'POST'
+            }, function(res){
+                console.log(res);
+                if(res.data.state == 1002) {
+                    base.ajax({
+                        url: 'https://api.qucaimi.com/index.php?r=site/getuserpower',
+                        data: {
+                            openid: app.globalData.openid
+                        }
+                    }, function(res){
+                        if(res.data.state == 1001) {
+                            wx.setNavigationBarTitle({
+                                title: '审核中'
+                            });
+                            app.globalData.userStatus = res.data.result;
+                            that.setData({
+                                userStatus: app.globalData.userStatus,
+                                type: 0,
+                                state: 1
+                            });
+                            wx.hideLoading();
+                            wx.showToast({
+                                title: '申请已提交',
+                                icon: 'success',
+                                duration: 2000
+                            });
+                        }
+                    });
+                } else {
+                    that.toast(res.data.result);
                 }
             });
         }
@@ -363,30 +352,6 @@ Page({
           districtSelIndex: d
         })
         this.distpickerCancel()
-    },
-    savePersonInfo: function(e) {
-        var data = e.detail.value
-        var telRule = /^1[3|4|5|7|8]\d{9}$/, nameRule = /^[\u2E80-\u9FFF]+$/
-        if (data.name == '') {
-          this.showMessage('请输入姓名')
-        } else if (! nameRule.test(data.name)) {
-          this.showMessage('请输入中文名')
-        } else if (data.tel == '') {
-          this.showMessage('请输入手机号码')
-        } else if (! telRule.test(data.tel)) {
-          this.showMessage('手机号码格式不正确')
-        } else if (data.province == '') {
-          this.showMessage('请选择所在地区')
-        } else if (data.city == '') {
-          this.showMessage('请选择所在地区')
-        } else if (data.district == '') {
-          this.showMessage('请选择所在地区')
-        } else if (data.address == '') {
-          this.showMessage('请输入详细地址')
-        } else {
-          this.showMessage(' 保存成功')
-          console.log(data)
-        }
     },
     showMessage: function(text) {
         var that = this

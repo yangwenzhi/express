@@ -1,4 +1,4 @@
-//获取应用实例
+var base = require('../../common/base');
 var app = getApp();
 var pages, prevPage;
 Page({
@@ -22,9 +22,10 @@ Page({
 
         pages = getCurrentPages();
         prevPage = pages[pages.length - 2]; //上一个页面
-
-        //请求用户详细信息 userid id
-        //message
+        wx.showLoading({
+            title: '加载中',
+        });
+        that.userInfo();
     },
     bindViewTap: function() {
         var that = this;
@@ -58,19 +59,59 @@ Page({
     },
     backData: function(power) {
         var that = this;
-        var list = prevPage.data.userlist;
-        for (var i in list) {
-            if (that.data.id == list[i].id) {
-                list[i].power = power;
-                break;
+        that.changepower(power, function(){
+            var list = prevPage.data.userlist;
+            for (var i in list) {
+                if (that.data.id == list[i].id) {
+                    list[i].power = power;
+                    break;
+                }
             }
-        }
-        prevPage.setData({
-            'userlist': list 
-        });
+            prevPage.setData({
+                'userlist': list 
+            });
 
-        wx.navigateBack({
-            delta: 1
+            wx.navigateBack({
+                delta: 1
+            });
+        });
+    },
+    changepower: function(power, callback) {
+        var that = this;
+        base.ajax({
+            url: 'https://api.qucaimi.com/index.php?r=site/audited&power=' + power,
+            userid: that.data.id
+        }, function(res){
+            console.log(res);
+            if(res.data.state == 1002) {
+                callback && callback();
+            } else {
+                that.toast(res.data.result);
+            }
+        });
+    },
+    userInfo: function() {
+        var that = this;
+        base.ajax({
+            url: 'https://api.qucaimi.com/index.php?r=site/userinfo',
+            userid: that.data.id
+        }, function(res){
+            console.log(res);
+            if(res.data.state == 1001) {
+                that.setData({
+                    message: res.data.result
+                });
+            } else {
+                that.toast(res.data.result);
+            }
+            wx.hideLoading();
+        });
+    },
+    toast: function(t) {
+        wx.showToast({
+            title: t,
+            icon: 'none',
+            duration: 2000
         });
     }
 })

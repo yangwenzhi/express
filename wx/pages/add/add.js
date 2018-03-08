@@ -1,10 +1,11 @@
-//index.js
-//获取应用实例
-var app = getApp()
+var base = require('../../common/base');
+var app = getApp();
+var timer = null;
 Page({
     data: {
         category: '',
         name: '',
+        tag: '',
         userid: '',
         info: {}
     },
@@ -23,6 +24,7 @@ Page({
         this.setData({
             category: options.category,
             name: options.name,
+            tag: options.tag,
             userid: wx.getStorageSync('userid')
         });
         wx.setNavigationBarTitle({
@@ -36,31 +38,35 @@ Page({
             info: e.detail.value
         });
         console.log({info: that.data.info, userid: that.data.userid})
-        wx.request({
+        //http://www.kuaidi100.com/autonumber/auto?num=[单号]&key=XYYNXvqg9704
+        //返回的comCode和tag对比确认productid是否合法
+        base.ajax({
             url: 'https://api.qucaimi.com/index.php?r=site/order',
             data: {
                 expressid: that.data.info.category,
                 productid: that.data.info.product,
+                tag: that.data.tag,
                 userid: that.data.userid
             },
-            header: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'X-UA': 'minprogram'
-            },
-            method: 'POST',
-            success: function(res) {
-                console.log(res);
-                if(res.data.state == 1002) {
-                    wx.showToast({
-                        title: '入库成功',
-                        icon: 'success',
-                        duration: 2000
-                    });
+            method: 'POST'
+        }, function(res){
+            console.log('入库', res);
+            if(res.data.state == 1002) {
+                wx.showToast({
+                    title: '入库成功',
+                    icon: 'success',
+                    duration: 1000
+                });
+                timer && clearTimeout(timer);
+                timer = setTimeout(function(){
                     that.bindViewTap();
-                } else {
-                    that.toast(res.data.result);
+                }, 1000);
+            } else {
+                that.toast(res.data.result);
+                timer && clearTimeout(timer);
+                timer = setTimeout(function(){
                     that.bindViewTap();
-                }
+                }, 1000);
             }
         });
     },
@@ -68,7 +74,7 @@ Page({
         wx.showToast({
             title: t,
             icon: 'none',
-            duration: 2000
+            duration: 1000
         });
     }
 })

@@ -1,5 +1,6 @@
-//获取应用实例
+var base = require('../../common/base');
 var app = getApp();
+var timer = null;
 Page({
     data: {
         userid: null,
@@ -15,60 +16,47 @@ Page({
             id: options.id
         });
 
-        
-        that.setData({
-            
-            userlist: [
-                {
-                    id: 100,
-                    power: 0
-                },
-                {
-                    id: 101,
-                    power: 1
-                },
-                {
-                    id: 102,
-                    power: 2
-                },
-                {
-                    id: 103,
-                    power: 1
-                }
-            ]
-        });
-
         wx.setNavigationBarTitle({
             title: '账号审核'
         });
+        wx.showLoading({
+            title: '加载中',
+        });
+        that.userlist();
     },
     onPullDownRefresh: function() {
         var that = this;
 
-        that.setData({
-            
-            userlist: [
-                {
-                    id: 100,
-                    power: 1
-                },
-                {
-                    id: 101,
-                    power: 1
-                },
-                {
-                    id: 102,
-                    power: 0
-                },
-                {
-                    id: 103,
-                    power: 2
-                }
-            ]
+        that.userlist();
+
+        timer && clearTimeout(timer);
+        timer = setTimeout(function(){
+            wx.stopPullDownRefresh(); //停止下拉刷新
+        }, 1000);
+    },
+    userlist: function() {
+        var that = this;
+
+        base.ajax({
+            url: 'https://api.qucaimi.com/index.php?r=site/unaudited'
+        }, function(res){
+            console.log(res);
+            if(res.data.state == 1001) {
+                that.setData({
+                    userlist: res.data.result
+                });
+            } else {
+                that.toast(res.data.result);
+            }
+            wx.hideLoading();
         });
 
-        setTimeout(function(){
-            wx.stopPullDownRefresh(); //停止下拉刷新
-        }, 2000);
+    },
+    toast: function(t) {
+        wx.showToast({
+            title: t,
+            icon: 'none',
+            duration: 2000
+        });
     }
 })
