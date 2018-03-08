@@ -9,8 +9,8 @@
 <view class="container container2" wx:if="{{empty == 0}}">
 
     <view class="item" wx:for="{{tongji.list}}" wx:key="categoryId" wx:for-item="item">
-        <navigator hover-class="none" url="../order/order?category={{item.id}}&name={{item.name}}">
-        	{{item.name}} ({{item.output}}/{{item.input}})
+        <navigator hover-class="none" url="../order/order?category={{item.express_id}}&name={{item.express_name}}">
+        	{{item.express_name}} ({{item.count}})
         	<view class="icon"><image class="icon-img" src="../../images/icon.png" background-size="cover"></image></view>
         </navigator>
     </view>
