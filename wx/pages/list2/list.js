@@ -1,5 +1,4 @@
 var base = require('../../common/base');
-var wxSortPickerView = require('../../wxSortPickerView/wxSortPickerView');
 var app = getApp();
 var timer = null;
 Page({
@@ -50,11 +49,6 @@ Page({
                 that.setData({
                     category: res.data.result,
                 });
-                var arr = [];
-                for(var i = 0; i < that.data.category.length; i++) {
-                    arr.push(that.data.category[i].name + '+' + that.data.category[i].id + '+' + that.data.category[i].tag);
-                }
-                wxSortPickerView.init(arr, that);
             } else {
                 that.toast(res.data.result);
             }

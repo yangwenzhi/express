@@ -96,7 +96,7 @@ function init(array, that, callback) {
     that.wxSortPickerViewLower = wxSortPickerViewLower;
     that.wxSortPickerViewScroll = wxSortPickerViewScroll;
     that.wxSortPickerViewTemTagTap = wxSortPickerViewTemTagTap;
-    setViewWH(that);
+    // setViewWH(that);
 
     buildTextData(that,array);
 }
@@ -139,7 +139,8 @@ function buildTextData(that,arr){
         var temIndex = temABC.indexOf(reg);
         textData[temIndex].textArray.push({
         	text: text.split('+')[0],
-        	category: text.split('+')[1]
+        	category: text.split('+')[1],
+        	tag: text.split('+')[2]
         });
     }
     var temData = that.data.wxSortPickerData;

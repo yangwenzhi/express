@@ -1,34 +1,44 @@
-.wxSortPickerViewTemTags{
-  position: fixed;
-  top: 10px;
-  right: 0;
-  background-color: #fff;
-  color: cornflowerblue;
-  display: none;
+.wxSortPickerViewTemTags {
+    position: fixed;
+    top: 0;
+    right: 0;
+    background-color: #fff;
+    color: cornflowerblue;
+    display: none;
 }
-.wxSortPickerViewTemTag{
-  text-align: center;
-  padding: 3px;
-  font-size: 12px;
+.wxSortPickerViewTemTag {
+    text-align: center;
+    padding: 5rpx;
+    font-size: 24rpx;
 }
-.wxSortPickerViewFixedTag{
-  position: fixed;
-  width: 100%;
-}
-
-.wxSortPickerViewTag{
-  background-color: #eee;
-  font-size: 16px;
-  font-weight: bold;
-  color: #000;
-  height: 30px;
-  line-height: 30px;
-  padding: 0 5px;
+.wxSortPickerViewFixedTag {
+    position: fixed;
+    width: 100%;
 }
 
-.wxSortPickerViewItem{
-  height: 40px;
-  line-height: 40px;
-  border-bottom: 1px solid #eee;
-  margin-left: 5px;
+.wxSortPickerViewList {
+    width: 100%;
+}
+
+.wxSortPickerViewTag {
+    background-color: #eee;
+    font-size: 32rpx;
+    font-weight: bold;
+    color: #000;
+    height: 60rpx;
+    line-height: 60rpx;
+    padding: 0 20rpx;
+}
+
+.wxSortPickerViewItem {
+    width: 100%;
+    height: 120rpx;
+    line-height: 120rpx;
+    padding: 0 20rpx;
+    box-sizing: border-box;
+    position: relative;
+    background: #ffffff;
+    font-size: 32rpx;
+    font-weight: bold;
+    border-top: 1rpx solid #e7e7eb;
 }

@@ -1,7 +1,5 @@
-@import "../../wxSortPickerView/wxSortPickerView.wxss";
-
 .container{
-    padding: 0;
+    padding: 0 10rpx;
     background: #ffffff;
 }
 
