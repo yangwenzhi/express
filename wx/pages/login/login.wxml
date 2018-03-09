@@ -53,9 +53,7 @@
         <view class="message {{showMessage ? 'fade-in' : ''}}" hidden="{{!showMessage}}">{{messageContent}}</view>
 
     </view>
-    <view wx:if="{{state == 0}}" class="msg">
-        <image class="userinfo-avatar2" src="../../images/none1.png" background-size="cover"></image>
-    </view>
+
     <view wx:if="{{state == 1}}" class="msg">
         您的申请已经提交成功，
         <text class="number">工号：{{userStatus.id}}</text>

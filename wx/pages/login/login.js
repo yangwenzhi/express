@@ -43,7 +43,10 @@ Page({
                 url: '../index/index'
             });
         }
-        this.setAreaData();
+        wx.showLoading({
+            title: '加载中',
+        });
+        that.setAreaData();
     },
     onShow: function () {
         var that = this;
@@ -169,6 +172,7 @@ Page({
                     title: '权限申请'
                 });
             }
+            wx.hideLoading();
         });
     },
     formSubmit: function(e) {
@@ -199,10 +203,10 @@ Page({
                     wx.switchTab({
                         url: '../index/index'
                     });
-                    wx.hideLoading();
                 } else {
                     that.toast(res.data.result);
                 }
+                wx.hideLoading();
             });
             
         } else {
@@ -267,16 +271,17 @@ Page({
                                 type: 0,
                                 state: 1
                             });
-                            wx.hideLoading();
                             wx.showToast({
                                 title: '申请已提交',
                                 icon: 'success',
                                 duration: 2000
                             });
                         }
+                        wx.hideLoading();
                     });
                 } else {
                     that.toast(res.data.result);
+                    wx.hideLoading();
                 }
             });
         }

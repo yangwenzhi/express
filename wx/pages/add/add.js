@@ -46,6 +46,7 @@ Page({
                 expressid: that.data.info.category,
                 productid: that.data.info.product,
                 tag: that.data.tag,
+                name: that.data.name,
                 userid: that.data.userid
             },
             method: 'POST'
