@@ -7,6 +7,12 @@ Page({
         userid: null,
         category: []
     },
+    onShareAppMessage: function (res) {
+        return {
+            title: '邻里汇',
+            path: 'pages/login/login'
+        }
+    },
     onLoad: function (options) {
         console.log('onLoad')
         var that = this;

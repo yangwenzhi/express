@@ -8,6 +8,12 @@ Page({
         productid: '',
         state: 0
     },
+    onShareAppMessage: function (res) {
+        return {
+            title: '邻里汇',
+            path: 'pages/login/login'
+        }
+    },
     onLoad: function () {
         console.log('onLoad')
         var that = this;
