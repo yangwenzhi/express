@@ -5,7 +5,8 @@ Page({
     data: {
         userid: '',
         info: {},
-        productid: ''
+        productid: '',
+        showModal: false
     },
     //事件处理函数
     bindViewTap: function() {
@@ -21,7 +22,9 @@ Page({
         var that = this;
         console.log(that.data.productid);
         //查询接口 订单号
-
+        wx.showLoading({
+            title: '查询中'
+        });
         base.ajax({
             url: 'https://api.qucaimi.com/index.php?r=site/query',
             data: {
@@ -31,6 +34,7 @@ Page({
             method: 'POST'
         }, function(res){
             console.log(res);
+            wx.hideLoading();
             if(res.data.state == 1001) {
                 that.setData({
                     info: {
@@ -54,23 +58,34 @@ Page({
             title: '正在出库'
         });
     },
-    formSubmit: function(e) {
-        console.log('form发生了submit事件，携带数据为：', e.detail.value);
+    bindViewOuter2: function() {
+        console.log('出库');
         var that = this;
-        var productid = e.detail.value.productid;
-        console.log({productid: productid, userid: that.data.userid})
+        that.postData(2, 'https://api.qucaimi.com/index.php?r=site/issue');
+    },
+    bindViewOuter3: function() {
+        console.log('退库');
+        var that = this;
+        that.postData(3, 'https://api.qucaimi.com/index.php?r=site/refund');
+    },
+    postData: function(state, url) {
+        var that = this;
+        wx.showLoading({
+            title: (state == 2 ? '出' : '退') + '库中'
+        });
         base.ajax({
-            url: 'https://api.qucaimi.com/index.php?r=site/issue',
+            url: url,
             data: {
-                productid: productid,
+                productid: that.data.info.productid,
                 userid: that.data.userid
             },
             method: 'POST'
         }, function(res){
-            console.log('出库', res);
+            console.log((state == 2 ? '出' : '退') + '库', res);
+            wx.hideLoading();
             if(res.data.state == 1002) {
                 wx.showToast({
-                    title: '出库成功',
+                    title: (state == 2 ? '出' : '退') + '库成功',
                     icon: 'success',
                     duration: 1000
                 });
@@ -95,6 +110,24 @@ Page({
             title: t,
             icon: 'none',
             duration: 1000
+        });
+    },
+    goselect: function(e) {
+        var that = this;
+        that.setData({
+            productid: e.detail.value,
+            showModal: false
+        });
+        that.select();
+    },
+    showDialogBtn: function() {
+        this.setData({
+            showModal: true
+        });
+    },
+    hideModal: function () {
+        this.setData({
+            showModal: false
         });
     }
 })

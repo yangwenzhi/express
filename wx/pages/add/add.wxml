@@ -1,18 +1,34 @@
 <!--index.wxml-->
 <view class="container">
-    <view  bindtap="bindViewTap" class="userinfo">
-        <image class="userinfo-avatar" src="../../images/3.png" background-size="cover"></image>
+    <view class="userinfo">
+        <image bindtap="bindViewTap" class="userinfo-avatar" src="../../images/3.png" background-size="cover"></image>
+        <view class="show-btn" bindtap="showDialogBtn">手动入库</view>
     </view>
-    <form bindsubmit="formSubmit" wx:if="{{info.result}}">
+    <form bindsubmit="formSubmit" wx:if="{{info}}">
         <view class="usermotto2">
             <view><text class="user-motto">扫码结果</text></view>
         </view>
         <view class="usermotto">
             <view><text class="user-motto">快递公司：{{name || '-'}}</text></view>
-            <view><text class="user-motto">快递单号：{{info.result || '-'}}</text></view>
+            <view><text class="user-motto">快递单号：{{info || '-'}}</text></view>
         </view>
         <input type="text" name="category" value="{{category}}" class="hidden" />
-        <input type="text" name="product" value="{{info.result}}" class="hidden" />
+        <input type="text" name="product" value="{{info}}" class="hidden" />
         <button formType="submit">确认入库</button>
     </form>
+</view>
+
+<!--弹窗-->
+<view class="modal-mask" bindtap="hideModal" catchtouchmove="preventTouchMove" wx:if="{{showModal}}"></view>
+<view class="modal-dialog" wx:if="{{showModal}}">
+    <view class="modal-title">手动入库</view>
+    <view class="modal-content">
+        <view class="modal-input">
+            <input class="input" placeholder-class="input-holder" type="text" placeholder="请输入快递单号" bindconfirm="goselect" confirm-type="search"></input>
+        </view>
+    </view>
+    <view class="modal-footer">
+        <view class="btn-cancel" bindtap="onCancel" data-status="cancel">取消</view>
+        <view class="btn-confirm" bindtap="onConfirm" data-status="confirm">确定</view>
+    </view>
 </view>

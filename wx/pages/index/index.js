@@ -34,6 +34,9 @@ Page({
     select: function() {
         var that = this;
         console.log(that.data.productid);
+        wx.showLoading({
+            title: '查询中'
+        });
         //查询接口 订单号
         base.ajax({
             url: 'https://api.qucaimi.com/index.php?r=site/query',
@@ -44,6 +47,7 @@ Page({
             method: 'POST'
         }, function(res){
             console.log(res);
+            wx.hideLoading();
             if(res.data.state == 1001) {
                 that.setData({
                     message: res.data.result,

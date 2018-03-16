@@ -1,9 +1,11 @@
 .container {
-    padding: 0 10rpx;
+    padding: 0;
 }
 
 .container2 {
     background: #ffffff;
+    padding: 0 10rpx;
+    width: 100%;
 }
 
 .item {
@@ -35,8 +37,37 @@
     color: red;
 }
 
+.green {
+    color: green;
+}
+
 .userinfo-avatar2 {
     width: 300rpx;
     height: 300rpx;
     margin-top: 300rpx;
+}
+
+.section {
+    width: 100%;
+    height: 80rpx;
+    background:#ffffff;
+    color: #828282;
+    font-size: 30rpx;
+    border-bottom: 2rpx solid #d7d8dc;
+    display: flex;
+}
+
+.sec_item {
+    width: 25%;
+    height: 80rpx;
+    line-height: 80rpx;
+    float: left;
+    text-align: center;
+}
+
+.sec_item_act {
+    border-bottom: 2rpx solid #3481eb;
+    color: #3481eb;
+    font-weight: bold;
+    position: relative;
 }

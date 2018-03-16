@@ -42,6 +42,7 @@ Page({
             },
             method: 'POST'
         }, function(res){
+            wx.hideLoading();
             if(res.data.state == 1002) {
                 wx.showToast({
                     title: '添加成功',
@@ -51,7 +52,6 @@ Page({
                 that.setData({
                     express: {}
                 });
-                wx.hideLoading();
             } else {
                 that.toast(res.data.result);
             }

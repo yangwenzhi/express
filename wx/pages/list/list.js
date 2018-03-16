@@ -19,13 +19,20 @@ Page({
             title: '选择快递公司'
         });
         wx.showLoading({
-            title: '加载中',
+            title: '加载中'
         });
+        // if(wx.getStorageSync('expresslist')) {
+        //     wxSortPickerView.init(wx.getStorageSync('expresslist'), that);
+        //     wx.hideLoading();
+        // }
         that.expresslist();
     },
     onPullDownRefresh: function() {
         var that = this;
 
+        // if(wx.getStorageSync('expresslist')) {
+        //     wxSortPickerView.init(wx.getStorageSync('expresslist'), that);
+        // }
         that.expresslist();
 
         timer && clearTimeout(timer);
@@ -46,6 +53,7 @@ Page({
             url: 'https://api.qucaimi.com/index.php?r=site/expresslist'
         }, function(res){
             console.log(res);
+            wx.hideLoading();
             if(res.data.state == 1001) {
                 that.setData({
                     category: res.data.result,
@@ -55,10 +63,13 @@ Page({
                     arr.push(that.data.category[i].name + '+' + that.data.category[i].id + '+' + that.data.category[i].tag);
                 }
                 wxSortPickerView.init(arr, that);
+                // if(!wx.getStorageSync('expresslist')) {
+                //     wxSortPickerView.init(arr, that);
+                // }
+                // wx.setStorageSync('expresslist', arr);
             } else {
                 that.toast(res.data.result);
             }
-            wx.hideLoading();
         });
     }
 })

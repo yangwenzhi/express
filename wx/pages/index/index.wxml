@@ -14,7 +14,8 @@
         	<view><text class="user-motto">操作人：{{message.user_name || '-'}}</text></view>
         	<view><text class="user-motto">操作站点：{{message.user_ename || '-'}}</text></view>
             <view><text class="user-motto">入库时间：{{message.createtime || '-'}}</text></view>
-            <view><text class="user-motto">出库时间：{{message.outertime || '-'}}</text></view>
+            <view wx:if="{{message.state == 3}}"><text class="user-motto">退库时间：{{message.outertime || '-'}}</text></view>
+            <view wx:else><text class="user-motto">出库时间：{{message.outertime || '-'}}</text></view>
         </view>
     </view>
     <view class="result" wx:if="{{state == 2}}">

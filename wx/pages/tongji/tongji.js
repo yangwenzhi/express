@@ -29,9 +29,7 @@ Page({
                 title: '历史统计'
             })
         }
-        wx.showLoading({
-            title: '加载中',
-        });
+        
         that.tongji();
     },
     bindDateChange: function (e) {
@@ -47,11 +45,15 @@ Page({
         var that = this;
         var d = that.data.date.replace(/-/g, '');
         console.log(d);
+        wx.showLoading({
+            title: '加载中',
+        });
         base.ajax({
             url: 'https://api.qucaimi.com/index.php?r=site/statistics-history&date=' + d,
             userid: that.data.userid
         }, function(res){
             console.log(res);
+            wx.hideLoading();
             if(res.data.state == 1001) {
                 that.setData({
                     tongji: res.data.result
@@ -67,11 +69,11 @@ Page({
                 }
                 if(that.data.class == 1) {
                     wx.setNavigationBarTitle({
-                        title: '今日统计(' + res.data.result.total_output + '/' + res.data.result.total_input + ')'
+                        title: '今日统计(' + res.data.result.total_output + '/' + res.data.result.total_refund + '/' + res.data.result.total_input + ')'
                     })
                 } else {
                     wx.setNavigationBarTitle({
-                        title: that.data.date + '(' + res.data.result.total_output + '/' + res.data.result.total_input + ')'
+                        title: that.data.date + '(' + res.data.result.total_output + '/' + res.data.result.total_refund + '/' + res.data.result.total_input + ')'
                     })
                 }
             } else {
@@ -80,7 +82,6 @@ Page({
                     empty: 1
                 });
             }
-            wx.hideLoading();
         });
     },
     toast: function(t) {

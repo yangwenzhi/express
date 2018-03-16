@@ -5,8 +5,11 @@ Page({
         userid: null,
         name: '',
         category: '',
-        order: [],
-        empty: 0
+        active: 0,
+        order0: [],
+        order1: [],
+        order2: [],
+        order3: []
     },
     onLoad: function (options) {
         console.log('onLoad')
@@ -44,26 +47,43 @@ Page({
             method: 'POST'
         }, function(res){
             console.log(res);
+            wx.hideLoading();
             if(res.data.state == 1001) {
-                that.setData({
-                    order: res.data.result
-                });
-                if(res.data.result.length) {
-                    that.setData({
-                        empty: 0
-                    });
-                } else {
-                    that.setData({
-                        empty: 1
-                    });
+                var order1 = [], order2 = [], order3 = [];
+                for(var i = 0; i < res.data.result.length; i++) {
+                    if(res.data.result[i].state == 1) order1.push(res.data.result[i]);
+                    else if(res.data.result[i].state == 2) order2.push(res.data.result[i]);
+                    else if(res.data.result[i].state == 3) order3.push(res.data.result[i]);
                 }
+                that.setData({
+                    order0: res.data.result,
+                    order1: order1,
+                    order2: order2,
+                    order3: order3
+                });
             } else {
                 that.toast(res.data.result);
-                that.setData({
-                    empty: 1
-                });
             }
-            wx.hideLoading();
+        });
+    },
+    bindActive0: function() {
+        this.setData({
+            active: 0
+        });
+    },
+    bindActive1: function() {
+        this.setData({
+            active: 1
+        });
+    },
+    bindActive2: function() {
+        this.setData({
+            active: 2
+        });
+    },
+    bindActive3: function() {
+        this.setData({
+            active: 3
         });
     }
-})
+});

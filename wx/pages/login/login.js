@@ -140,7 +140,7 @@ Page({
                     
                     if(that.data.userid) {
                         wx.setNavigationBarTitle({
-                            title: '站长助手'
+                            title: '邻里汇'
                         });
                         wx.switchTab({
                             url: '../index/index'
@@ -198,6 +198,7 @@ Page({
                 },
                 method: 'POST'
             }, function(res){
+                wx.hideLoading();
                 if(res.data.state == 1002) {
                     wx.setStorageSync('userid', that.data.loginInfo.userid);
                     wx.switchTab({
@@ -206,7 +207,6 @@ Page({
                 } else {
                     that.toast(res.data.result);
                 }
-                wx.hideLoading();
             });
             
         } else {
@@ -261,6 +261,7 @@ Page({
                             openid: app.globalData.openid
                         }
                     }, function(res){
+                        wx.hideLoading();
                         if(res.data.state == 1001) {
                             wx.setNavigationBarTitle({
                                 title: '审核中'
@@ -277,11 +278,10 @@ Page({
                                 duration: 2000
                             });
                         }
-                        wx.hideLoading();
                     });
                 } else {
-                    that.toast(res.data.result);
                     wx.hideLoading();
+                    that.toast(res.data.result);
                 }
             });
         }

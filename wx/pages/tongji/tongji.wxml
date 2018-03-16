@@ -1,10 +1,12 @@
+<view class="toast">说明：快递公司名称（出库数/退库数/入库总数）</view>
+
 <view class="section" wx:if="{{class == 2}}">  
 	<picker mode="date" value="{{date}}" start="2000-09-01" end="2020-09-01" bindchange="bindDateChange">  
 		<view class="picker">  
 			日期: {{date}}  
 		</view>  
 	</picker>  
-</view>  
+</view>
 
 <view class="container container2" wx:if="{{empty == 0}}">
 

@@ -41,6 +41,7 @@ Page({
             url: 'https://api.qucaimi.com/index.php?r=site/unaudited'
         }, function(res){
             console.log(res);
+            wx.hideLoading();
             if(res.data.state == 1001) {
                 that.setData({
                     userlist: res.data.result
@@ -48,7 +49,6 @@ Page({
             } else {
                 that.toast(res.data.result);
             }
-            wx.hideLoading();
         });
 
     },

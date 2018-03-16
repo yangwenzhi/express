@@ -15,7 +15,7 @@
     "window":{
         "backgroundTextStyle": "light",
         "navigationBarBackgroundColor": "#3481eb",
-        "navigationBarTitleText": "站长助手",
+        "navigationBarTitleText": "邻里汇",
         "navigationBarTextStyle": "white",
         "backgroundColor": "#f0eff4"
     },

@@ -97,6 +97,7 @@ Page({
             userid: that.data.id
         }, function(res){
             console.log(res);
+            wx.hideLoading();
             if(res.data.state == 1001) {
                 that.setData({
                     message: res.data.result
@@ -104,7 +105,6 @@ Page({
             } else {
                 that.toast(res.data.result);
             }
-            wx.hideLoading();
         });
     },
     toast: function(t) {

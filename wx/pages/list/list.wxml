@@ -1,6 +1,12 @@
 <import src="../../wxSortPickerView/wxSortPickerView.wxml"/> 
 
 <view class="container">
+	<navigator class="bar" hover-class="none" url="../add/add?auto=1">
+		<view class="bar">
+			<image class="userinfo-avatar2" src="../../images/icon/auto.png" background-size="cover"></image>
+			<text>智能入库</text>
+		</view>
+	</navigator>
 	<template is="wxSortPickerView" data="{{wxSortPickerData}}"/>
 </view>
 

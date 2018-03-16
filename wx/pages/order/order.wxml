@@ -1,15 +1,88 @@
-<view class="container container2" wx:if="{{empty == 0}}">
+<view class="section">  
+	<view class="sec_item {{active == 0 ? 'sec_item_act' : ''}}" bindtap="bindActive0">全部({{order0.length}})</view>
+	<view class="sec_item {{active == 1 ? 'sec_item_act' : ''}}" bindtap="bindActive1">未出库({{order1.length}})</view>
+	<view class="sec_item {{active == 2 ? 'sec_item_act' : ''}}" bindtap="bindActive2">已出库({{order2.length}})</view>
+	<view class="sec_item {{active == 3 ? 'sec_item_act' : ''}}" bindtap="bindActive3">已退库({{order3.length}})</view>
+</view>
 
-    <view class="item" wx:for="{{order}}" wx:key="orderId" wx:for-item="item">
-    	<view class="order">{{item.productid}}</view>
-        <view class="state">
-            <text wx:if="{{item.state==1}}" class="red">未出库</text>
-            <text wx:if="{{item.state==2}}">已出库</text>
-        </view>
-    </view>
+<view class="container" wx:if="{{active == 0}}">
+
+	<block wx:if="{{order0.length > 0}}">
+		<view class="container container2">
+		    <view class="item" wx:for="{{order0}}" wx:key="orderId0" wx:for-item="item">
+		    	<view class="order">{{item.productid}}</view>
+		        <view class="state">
+		            <text wx:if="{{item.state==1}}" class="red">未出库</text>
+		            <text wx:if="{{item.state==2}}" class="green">已出库</text>
+		            <text wx:if="{{item.state==3}}">已退库</text>
+		        </view>
+		    </view>
+	    </view>
+    </block>
+    <block wx:else>
+    	<view class="container">
+		    <image class="userinfo-avatar2" src="../../images/none2.png" background-size="cover"></image>
+		</view>
+    </block>
+
+</view>
+
+<view class="container" wx:if="{{active == 1}}">
+
+    <block wx:if="{{order1.length > 0}}">
+	    <view class="container container2">
+		    <view class="item" wx:for="{{order1}}" wx:key="orderId1" wx:for-item="item">
+		    	<view class="order">{{item.productid}}</view>
+		        <view class="state">
+		            <text class="red">未出库</text>
+		        </view>
+		    </view>
+		</view>
+    </block>
+    <block wx:else>
+    	<view class="container">
+		    <image class="userinfo-avatar2" src="../../images/none2.png" background-size="cover"></image>
+		</view>
+    </block>
     
 </view>
 
-<view class="container" wx:if="{{empty == 1}}">
-    <image class="userinfo-avatar2" src="../../images/none2.png" background-size="cover"></image>
+<view class="container" wx:if="{{active == 2}}">
+
+    <block wx:if="{{order2.length > 0}}">
+	    <view class="container container2">
+		    <view class="item" wx:for="{{order2}}" wx:key="orderId2" wx:for-item="item">
+		    	<view class="order">{{item.productid}}</view>
+		        <view class="state">
+		            <text class="green">已出库</text>
+		        </view>
+		    </view>
+		</view>
+    </block>
+    <block wx:else>
+    	<view class="container">
+		    <image class="userinfo-avatar2" src="../../images/none2.png" background-size="cover"></image>
+		</view>
+    </block>
+    
+</view>
+
+<view class="container" wx:if="{{active == 3}}">
+
+    <block wx:if="{{order3.length > 0}}">
+	    <view class="container container2">
+		    <view class="item" wx:for="{{order3}}" wx:key="orderId3" wx:for-item="item">
+		    	<view class="order">{{item.productid}}</view>
+		        <view class="state">
+		            <text>已退库</text>
+		        </view>
+		    </view>
+	    </view>
+    </block>
+    <block wx:else>
+    	<view class="container">
+		    <image class="userinfo-avatar2" src="../../images/none2.png" background-size="cover"></image>
+		</view>
+    </block>
+    
 </view>

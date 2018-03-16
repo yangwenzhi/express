@@ -1,25 +1,27 @@
 <view class="container">
     <view class="header">
-        <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
+        
       	<view class="header-content">
       		<view class="header-item0">
-      			<view class="header-item">工号：{{userid}} </view>
-      			<view class="header-item"></view>
+      			<view class="header-item-1"><image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image></view>
+      			<view class="header-item-2">工号：{{userid}} </view>
       		</view>
-      		<view>
-      			<view class="header-item">今日入库：{{tongji.today_input}} </view>
-      			<view class="header-item">今日出库：{{tongji.today_output}} </view>
+      		<view class="header-item1">
+      			<view class="header-item">今日入库：<text class="black">{{tongji.today_input}}</text></view>
+      			<view class="header-item">今日出库：<text class="green">{{tongji.today_output}}</text></view>
+      			<view class="header-item">今日退库：<text class="red">{{tongji.today_refund}}</text></view>
       		</view>
-      		<view>
-      			<view class="header-item">总入库：{{tongji.total_input}} </view>
-      			<view class="header-item">总出库：{{tongji.total_output}} </view>
+      		<view class="header-item1">
+      			<view class="header-item">总入库：<text class="black">{{tongji.total_input}}</text></view>
+      			<view class="header-item">总出库：<text class="green">{{tongji.total_output}}</text></view>
+      			<view class="header-item">总退库：<text class="red">{{tongji.total_refund}}</text></view>
       		</view>
       	</view>
     </view>
 
     <view class="item">
 	    <navigator hover-class="none" url="../tongji/tongji?class=1">
-	    	<image class="userinfo-avatar2" src="../../images/icon/outer.png" background-size="cover" bindtap="bindViewTap"></image>
+	    	<image class="userinfo-avatar2" src="../../images/icon/outer.png" background-size="cover"></image>
 	    	<view class="userinfo-text">今日统计</view>
 	    	<view class="icon"><image class="icon-img" src="../../images/icon.png" background-size="cover"></image></view>
 	    </navigator>
@@ -27,7 +29,7 @@
 
 	<view class="item">
 	    <navigator hover-class="none" url="../tongji/tongji?class=2">
-	    	<image class="userinfo-avatar2" src="../../images/icon/join.png" background-size="cover" bindtap="bindViewTap"></image>
+	    	<image class="userinfo-avatar2" src="../../images/icon/join.png" background-size="cover"></image>
 	    	<view class="userinfo-text">历史统计</view>
 	    	<view class="icon"><image class="icon-img" src="../../images/icon.png" background-size="cover"></image></view>
 	    </navigator>
@@ -36,7 +38,7 @@
 	<block wx:if="{{message.level == 2 || message.level == 3}}">
 		<view class="item">
 		    <navigator hover-class="none" url="../addexpress/addexpress">
-		    	<image class="userinfo-avatar2" src="../../images/icon/chuku.png" background-size="cover" bindtap="bindViewTap"></image>
+		    	<image class="userinfo-avatar2" src="../../images/icon/chuku.png" background-size="cover"></image>
 		    	<view class="userinfo-text">快递管理</view>
 		    	<view class="icon"><image class="icon-img" src="../../images/icon.png" background-size="cover"></image></view>
 		    </navigator>
@@ -44,7 +46,7 @@
 
 		<view class="item">
 		    <navigator hover-class="none" url="../user/user">
-		    	<image class="userinfo-avatar2" src="../../images/icon/user.png" background-size="cover" bindtap="bindViewTap"></image>
+		    	<image class="userinfo-avatar2" src="../../images/icon/user.png" background-size="cover"></image>
 		    	<view class="userinfo-text">账号审核</view>
 		    	<view class="icon"><image class="icon-img" src="../../images/icon.png" background-size="cover"></image></view>
 		    </navigator>

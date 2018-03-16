@@ -11,7 +11,7 @@
 
 <template name="wxSortPickerViewItem">
     <block wx:for="{{item.textArray}}" wx:for-item="child" wx:key="">
-        <view class="wxSortPickerViewItem" data-text="{{child.text}}+{{child.category}}+{{child.tag}}" bindtap="wxSortPickerViewItemTap">
+        <view class="wxSortPickerViewItem" data-text="{{child.text}}+{{child.category}}+{{child.tag}}">
             <navigator hover-class="none" url="../add/add?category={{child.category}}&name={{child.text}}&tag={{child.tag}}">
                 <text>{{child.text}}</text>   
                 <view class="icon"><image class="icon-img" src="../../images/icon.png" background-size="cover"></image></view>
