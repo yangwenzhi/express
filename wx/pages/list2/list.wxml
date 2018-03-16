@@ -1,5 +1,12 @@
 <view class="container">
-
+	
+	<navigator class="bar" hover-class="none" url="../add/add?auto=1">
+		<view class="bar">
+			<image class="userinfo-avatar2" src="../../images/icon/auto.png" background-size="cover"></image>
+			<text>智能入库</text>
+		</view>
+	</navigator>
+	
     <view class="item" wx:for="{{category}}" wx:key="categoryId" wx:for-item="item">
         <navigator hover-class="none" url="../add/add?category={{item.id}}&name={{item.name}}&tag={{item.tag}}">
         	{{item.name}}-{{item.tag}}
