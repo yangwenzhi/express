@@ -27,6 +27,7 @@ Page({
         type: 0,
         state: 0,
         userStatus: {},
+        locked: false
     },
     onLoad: function(options) {
         var that = this;
@@ -178,6 +179,10 @@ Page({
     formSubmit: function(e) {
         var that = this;
         console.log('form发生了submit事件，携带数据为：', e.detail.value);
+        if(that.data.locked) return false;
+        that.setData({
+            locked: true
+        });
         if(that.data.type == 1) {
             that.setData({
                 loginInfo: e.detail.value
@@ -207,6 +212,9 @@ Page({
                 } else {
                     that.toast(res.data.result);
                 }
+                that.setData({
+                    locked: false
+                });
             });
             
         } else {
@@ -278,10 +286,16 @@ Page({
                                 duration: 2000
                             });
                         }
+                        that.setData({
+                            locked: false
+                        });
                     });
                 } else {
                     wx.hideLoading();
                     that.toast(res.data.result);
+                    that.setData({
+                        locked: false
+                    });
                 }
             });
         }

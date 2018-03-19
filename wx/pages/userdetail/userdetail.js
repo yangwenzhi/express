@@ -6,6 +6,7 @@ Page({
         userid: null,
         id: '',
         message: {},
+        locked: false
     },
     onLoad: function (options) {
         console.log('onLoad')
@@ -59,6 +60,10 @@ Page({
     },
     backData: function(power) {
         var that = this;
+        if(that.data.locked) return false;
+        that.setData({
+            locked: true
+        });
         that.changepower(power, function(){
             var list = prevPage.data.userlist;
             for (var i in list) {
@@ -67,10 +72,12 @@ Page({
                     break;
                 }
             }
+            that.setData({
+                locked: false
+            });
             prevPage.setData({
                 'userlist': list 
             });
-
             wx.navigateBack({
                 delta: 1
             });
@@ -87,6 +94,9 @@ Page({
                 callback && callback();
             } else {
                 that.toast(res.data.result);
+                that.setData({
+                    locked: false
+                });
             }
         });
     },

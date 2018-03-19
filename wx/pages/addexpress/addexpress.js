@@ -3,7 +3,8 @@ var app = getApp();
 Page({
     data: {
         userid: null,
-        express: {}
+        express: {},
+        locked: false
     },
     onLoad: function (options) {
         console.log('onLoad')
@@ -18,7 +19,9 @@ Page({
     formSubmit: function(e) {
         var that = this;
         console.log('form发生了submit事件，携带数据为：', e.detail.value);
+        if(that.data.locked) return false;
         that.setData({
+            locked: true,
             express: e.detail.value
         });
         if(that.data.express.name == '') {
@@ -55,6 +58,9 @@ Page({
             } else {
                 that.toast(res.data.result);
             }
+            that.setData({
+                locked: false
+            });
         });
     },
     toast: function(t) {

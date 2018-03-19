@@ -9,7 +9,8 @@ Page({
         userid: '',
         info: '',
         auto: 0,
-        showModal: false
+        showModal: false,
+        locked: false
     },
     //事件处理函数
     bindViewTap: function() {
@@ -44,6 +45,10 @@ Page({
     formSubmit: function(e) {
         console.log('form发生了submit事件，携带数据为：', e.detail.value);
         var that = this, d = e.detail.value;
+        if(that.data.locked) return false;
+        that.setData({
+            locked: true
+        });
         wx.showLoading({
             title: '入库中'
         });
@@ -80,7 +85,8 @@ Page({
                 }, 1000);
             }
             that.setData({
-                info: ''
+                info: '',
+                locked: false
             });
         });
     },

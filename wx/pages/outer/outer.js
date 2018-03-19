@@ -6,7 +6,8 @@ Page({
         userid: '',
         info: {},
         productid: '',
-        showModal: false
+        showModal: false,
+        locked: false
     },
     //事件处理函数
     bindViewTap: function() {
@@ -70,6 +71,10 @@ Page({
     },
     postData: function(state, url) {
         var that = this;
+        if(that.data.locked) return false;
+        that.setData({
+            locked: true
+        });
         wx.showLoading({
             title: (state == 2 ? '出' : '退') + '库中'
         });
@@ -101,7 +106,8 @@ Page({
                 }, 1000);
             }
             that.setData({
-                info: {}
+                info: {},
+                locked: false
             });
         });
     },
