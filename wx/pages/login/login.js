@@ -97,7 +97,9 @@ Page({
                 base.ajax({
                     url: 'https://api.qucaimi.com/index.php?r=site/code2session',
                     data: {
-                        code: app.globalData.code
+                        code: app.globalData.code,
+                        avatarUrl: app.globalData.userInfo.avatarUrl,
+                        nickName: app.globalData.userInfo.nickName
                     }
                 }, function(res){
                     console.log('code2session', res.data);
