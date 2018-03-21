@@ -10,7 +10,8 @@ Page({
         info: '',
         auto: 0,
         showModal: false,
-        locked: false
+        locked: false,
+        inputValue: ''
     },
     //事件处理函数
     bindViewTap: function() {
@@ -28,7 +29,7 @@ Page({
         that.setData({
             category: options.category || '-',
             name: options.name || '-',
-            tag: options.tag || '-',
+            tag: options.tag || '',
             auto: options.auto || '0',
             userid: wx.getStorageSync('userid')
         });
@@ -43,15 +44,16 @@ Page({
         }
     },
     formSubmit: function(e) {
-        console.log('form发生了submit事件，携带数据为：', e.detail.value);
         var that = this, d = e.detail.value;
         if(that.data.locked) return false;
         that.setData({
+            info: '',
             locked: true
         });
         wx.showLoading({
             title: '入库中'
         });
+        console.log('form发生了submit事件，携带数据为：', e.detail.value);
         //http://www.kuaidi100.com/autonumber/auto?num=[单号]&key=XYYNXvqg9704
         //返回的comCode和tag对比确认productid是否合法
         base.ajax({
@@ -85,7 +87,6 @@ Page({
                 }, 1000);
             }
             that.setData({
-                info: '',
                 locked: false
             });
         });
@@ -99,6 +100,9 @@ Page({
     },
     getExpressData: function() {
         var that = this;
+        that.setData({
+            locked: true
+        });
         wx.showLoading({
             title: '智能识别中'
         });
@@ -114,14 +118,20 @@ Page({
                     tag: res.data.result.tag
                 });
             } else {
+                that.setData({
+                    info: ''
+                });
                 that.toast(res.data.result);
             }
+            that.setData({
+                locked: false
+            });
         });
     },
-    goselect: function(e) {
+    goselect: function() {
         var that = this;
         that.setData({
-            info: e.detail.value,
+            info: that.data.inputValue,
             showModal: false
         });
         if(that.data.auto == 1) that.getExpressData();
@@ -131,9 +141,22 @@ Page({
             showModal: true
         });
     },
-    hideModal: function () {
+    hideModal: function() {
         this.setData({
             showModal: false
         });
+    },
+    bindKeyInput: function(e) {
+        this.setData({
+            inputValue: e.detail.value
+        });
+    },
+    onCancel: function() {
+        this.hideModal();
+    },
+    onConfirm: function() {
+        var that = this;
+        if(that.data.inputValue == '') return false;
+        that.goselect();
     }
 })

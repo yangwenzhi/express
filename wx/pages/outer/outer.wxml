@@ -23,10 +23,10 @@
 <!--弹窗-->
 <view class="modal-mask" bindtap="hideModal" catchtouchmove="preventTouchMove" wx:if="{{showModal}}"></view>
 <view class="modal-dialog" wx:if="{{showModal}}">
-    <view class="modal-title">手动入库</view>
+    <view class="modal-title">手动出库</view>
     <view class="modal-content">
         <view class="modal-input">
-            <input class="input" placeholder-class="input-holder" type="text" placeholder="请输入快递单号" bindconfirm="goselect" confirm-type="search"></input>
+            <input class="input" placeholder-class="input-holder" type="number" placeholder="请输入快递单号" bindconfirm="goselect" bindinput="bindKeyInput" confirm-type="done" focus></input>
         </view>
     </view>
     <view class="modal-footer">

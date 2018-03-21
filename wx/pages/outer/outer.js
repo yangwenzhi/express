@@ -7,7 +7,8 @@ Page({
         info: {},
         productid: '',
         showModal: false,
-        locked: false
+        locked: false,
+        inputValue: ''
     },
     //事件处理函数
     bindViewTap: function() {
@@ -135,5 +136,22 @@ Page({
         this.setData({
             showModal: false
         });
+    },
+    bindKeyInput: function(e) {
+        this.setData({
+            inputValue: e.detail.value
+        });
+    },
+    onCancel: function() {
+        this.hideModal();
+    },
+    onConfirm: function() {
+        var that = this;
+        if(that.data.inputValue == '') return false;
+        that.setData({
+            productid: that.data.inputValue,
+            showModal: false
+        });
+        that.select();
     }
 })

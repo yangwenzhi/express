@@ -92,7 +92,7 @@
     width: 540rpx;
     overflow: hidden;
     position: fixed;
-    top: 50%;
+    top: 30%;
     left: 0;
     z-index: 9999;
     background: #f9f9f9;
@@ -105,7 +105,6 @@
     font-size: 36rpx;
     color: #030303;
     text-align: center;
-    display: none;
 }
 
 .modal-content {
@@ -142,7 +141,6 @@ input-holder {
     border-top: 1px solid #dedede;
     font-size: 34rpx;
     line-height: 86rpx;
-    display: none;
 }
 
 .btn-cancel {
